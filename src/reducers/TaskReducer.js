@@ -11,6 +11,9 @@ import {
   SET_ACTUAL_TIME,
   TOGGLE_COMPLETED,
   TOGGLE_DETAIL_MODE,
+  SELECT_A_TASK,
+  DE_SELECT_A_TASK,
+  CLEAR_SELECTED_TASK
  } from '../actions/TaskActions';
  import type { TaskAction } from '../actions/TaskActions';
 
@@ -32,7 +35,8 @@ type stateType = {
 
 const initialState: stateType = {
   tasks: {},
-  nextTaskId: 0
+  nextTaskId: 0,
+  selectedTaskId: []
 };
 
 const TaskReducer = (state: any=initialState, action: TaskAction) => {
@@ -48,7 +52,7 @@ const TaskReducer = (state: any=initialState, action: TaskAction) => {
             taskName,
             completed: false,
             active: true,
-            detailMode: false
+            detailMode: false,
           }
         },
         nextTaskId: state.nextTaskId + 1
@@ -68,6 +72,7 @@ const TaskReducer = (state: any=initialState, action: TaskAction) => {
         },
       });
     }
+
 
     case TOGGLE_COMPLETED:{
       const { id } = payload;
@@ -171,6 +176,35 @@ const TaskReducer = (state: any=initialState, action: TaskAction) => {
       return Object.assign({}, {
         ...state,
         tesks: _.omit(state.tasks, id),
+      });
+    }
+
+    case SELECT_A_TASK: {
+      const { id } = payload;
+      return Object.assign({}, {
+        ...state,
+        selectedTaskId:[
+          ...state.selectedTaskId,
+          id
+        ]
+      });
+    }
+
+    case DE_SELECT_A_TASK: {
+      const { id } = payload;
+      return Object.assign({}, {
+        ...state,
+        selectedTaskId:[
+          state.selectedTaskId.filter((seletedId)=>seletedId!==id),
+        ]
+      });
+
+    }
+
+    case CLEAR_SELECTED_TASK: {
+      return Object.assign({}, {
+        ...state,
+        selectedTaskId:[]
       });
     }
 

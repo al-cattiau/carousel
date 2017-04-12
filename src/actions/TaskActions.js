@@ -9,6 +9,9 @@ export const SET_TASK_DEFER_DATE = 'SET_TASK_DEFER_DATE';
 export const SET_PREDICT_TIME = 'SET_PREDICT_TIME';
 export const SET_ACTUAL_TIME = 'SET_ACTUAL_TIME';
 export const TOGGLE_DETAIL_MODE = 'TOGGLE_DETAIL_MODE';
+export const SELECT_A_TASK = 'SELECT_A_TASK';
+export const DE_SELECT_A_TASK = 'DE_SELECT_A_TASK';
+export const CLEAR_SELECTED_TASK = 'CLEAR_SELECTED_TASK';
 
 export type TaskAction = {
   type: string,
@@ -21,6 +24,26 @@ export type TaskAction = {
      predictTime? :number
   }
 }
+
+export const deSelectATASK = (id: number)=>({
+  type: DE_SELECT_A_TASK,
+  payload: {
+    id
+  }
+});
+
+export const clearSelectedTask = ()=>({
+  type: CLEAR_SELECTED_TASK,
+  payload: {
+  }
+});
+
+export const selectATask = (id: number)=>({
+  type: SELECT_A_TASK,
+  payload: {
+    id
+  }
+});
 
 export const addTask = (taskName: string)=>({
   type: ADD_TASK,
@@ -58,6 +81,7 @@ export const toggleActive = (id: number)=> ({
   }
 }: TaskAction);
 
+
 export const setTaskDueDate = (id: number, dueDate: Date)=>({
   type: SET_TASK_DUE_DATE,
   payload: {
@@ -89,6 +113,7 @@ export const setActualTime = (id: number, actualTime: number)=>({
     actualTime
   }
 }: TaskAction);
+
 
 export const deleteTask = (id: number)=> ({
   type: DELETE_TASK,

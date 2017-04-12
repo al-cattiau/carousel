@@ -4200,6 +4200,13 @@ react-addons-create-fragment@^15.0.0:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
+react-addons-css-transition-group@^15.5.2:
+  version "15.5.2"
+  resolved "http://registry.npm.taobao.org/react-addons-css-transition-group/download/react-addons-css-transition-group-15.5.2.tgz#ea7e0a9f0e1c27ca426da4efd3559915bd42ead2"
+  dependencies:
+    fbjs "^0.8.4"
+    object-assign "^4.1.0"
+
 react-addons-transition-group@^15.0.0:
   version "15.5.0"
   resolved "http://registry.npm.taobao.org/react-addons-transition-group/download/react-addons-transition-group-15.5.0.tgz#4a7dd48d2061f49a8977396f9e7c3f40f1b07a40"
@@ -4388,7 +4395,13 @@ redux-thunk@^2.2.0:
   version "2.2.0"
   resolved "http://registry.npm.taobao.org/redux-thunk/download/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
-redux@^3.6.0:
+redux-undo@^0.6.1:
+  version "0.6.1"
+  resolved "http://registry.npm.taobao.org/redux-undo/download/redux-undo-0.6.1.tgz#ff407749b8f468bead636e413819e92c0982eeca"
+  dependencies:
+    redux "^3.0.2"
+
+redux@^3.0.2, redux@^3.6.0:
   version "3.6.0"
   resolved "http://registry.npm.taobao.org/redux/download/redux-3.6.0.tgz#887c2b3d0b9bd86eca2be70571c27654c19e188d"
   dependencies:
@@ -4527,6 +4540,10 @@ require-uncached@^1.0.2:
 requires-port@1.0.x, requires-port@1.x.x:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/requires-port/download/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+
+reselect@^3.0.0:
+  version "3.0.0"
+  resolved "http://registry.npm.taobao.org/reselect/download/reselect-3.0.0.tgz#b2e35977f03048700028eaee3a8c0639e40e8f35"
 
 resolve-from@^1.0.0:
   version "1.0.1"

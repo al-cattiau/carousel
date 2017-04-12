@@ -21,7 +21,7 @@ const listItemStyleInPortrait = {
 
 
 export default (props) => {
-  const { mode, item, isHightlight } = props;
+  const { mode, item, isHightlight, index } = props;
   let { text } = item;
   const badgeCount = props.badgeCount < 10 ? props.badgeCount : '∞';
   let listItemStyle, badgeStyle ;
@@ -36,6 +36,16 @@ export default (props) => {
      : listItemStyleInPortrait
      badgeStyle = badgeStyleInPortrait;
      text = null;
+  }
+  if (index !== 0 || badgeCount===0){
+    return (
+      <ListItem
+          containerElement={<Link to={`/${item.text}` }/>}            
+          leftIcon={item.icon}
+          style={listItemStyle}
+          primaryText={text}
+        />
+    )
   }
     return(
       <Badge 

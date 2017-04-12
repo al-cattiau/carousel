@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { List } from 'material-ui/List';
 import { connect } from 'react-redux';
@@ -38,10 +39,6 @@ class Leftlist extends Component{
 
   componentWillReceiveProps(nextProps, nextState){
     this.items[0].count = nextProps.inboxCount;
-    this.items[1].count = nextProps.archiveCount;
-    this.items[2].count = nextProps.forecastCount;
-    this.items[3].count = nextProps.tagCount;
-    this.items[4].count = nextProps.trashCount;
     this.hightLightIndex = this.items.findIndex((item)=> `/${item.text}` === nextProps.hightLight  );
     this.portrait = nextProps.isBound('portrait');
   }
@@ -49,7 +46,7 @@ class Leftlist extends Component{
   renderItems(mode){
     return this.items.map((item, index)=>{
       const isHightlight = this.hightLightIndex===index? true: false;
-      return <ListBadgeitem badgeCount={item.count} mode={mode} item={item} key={item.text} isHightlight={isHightlight}/>
+      return <ListBadgeitem index={index} badgeCount={item.count} mode={mode} item={item} key={item.text} isHightlight={isHightlight}/>
     }) 
   }
   render(){
@@ -66,46 +63,20 @@ Leftlist.propTypes = {
   hightLight: PropTypes.string.isRequired
 };
 
-const computeInboxListBadge=(object)=> (
-   Object.entries(object).filter(([ objectId, object ])=>(
-     object.completed === false &&
-     object.active === true 
-   )).length
+const computeInboxListBadge=(tasks)=> (
+  _.filter(
+    tasks,
+    task => (task.completed === false && task.active === true)
+  ).length
 );
 
-const computeArchiveListBadge=(object)=> (
-   Object.entries(object).filter(([ objectId, object ])=>(
-     object.completed === true &&
-     object.active === true 
-   )).length
-);
 
-const computeForecastListBadge=(object)=> (
-   Object.entries(object).filter(([ objectId, object ])=>(
-     object.dueDate ||
-     object.deferDate  
-   )).length
-);
-
-const computeTrashListBadge=(object)=> (
-   Object.entries(object).filter(([ objectId, object ])=>(
-     object.active === false
-   )).length
-);
-
-const computeTagListBadge=(object)=> (
-   Object.entries(object).length
-);
 
 const mapStateToProps = (state) => {
   return {
     hightLight: state.routing.locationBeforeTransitions.pathname,
     tags: state.TagReducer.tags,
     inboxCount: computeInboxListBadge(state.TaskReducer.tasks),
-    archiveCount: computeArchiveListBadge(state.TaskReducer.tasks),
-    forecastCount: computeForecastListBadge(state.TaskReducer.tasks),
-    tagCount: computeTagListBadge(state.TagReducer.tags),
-    trashCount: computeTrashListBadge(state.TaskReducer.tasks),
   };
 };
 
