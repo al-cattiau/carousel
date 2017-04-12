@@ -26,7 +26,6 @@ class Inbox extends Component {
   state = { editMode: false }
 
   componentWillUnmount(){
-    this.props.archiveAll();
   }
 
   toggleEditMode(){
@@ -48,7 +47,7 @@ class Inbox extends Component {
   }
 
   updateButtonEnable(){
-    return (Object.keys(this.props.unArchiveTask).length === 0 ? false: true);
+    return (Object.keys(this.props.tasks).length === 0 ? false: true);
   }
   render(){
     return (
@@ -63,7 +62,7 @@ class Inbox extends Component {
         <FloatActionButton  
           secondary={ this.state.editMode }
           disabled={!this.updateButtonEnable() && !this.state.editMode} 
-          clickFab={()=>{ this.props.archiveAll() }} 
+          clickFab={()=>{  }} 
           Icon={ this.state.editMode ? <Delete/> : <Undo/>} />
       </div>
     )
@@ -73,14 +72,9 @@ class Inbox extends Component {
 const mapStateToProps = (state) => {
   const tasks ={} 
   Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
-    if(!taskObject.archived){ tasks[taskId] = taskObject }
+    if(!taskObject.completed){ tasks[taskId] = taskObject }
   });
-  const unArchiveTask = {}
-  Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
-    if(!taskObject.archived && taskObject.completed){ unArchiveTask[taskId] = taskObject }
-  });
-
-  return { tasks, unArchiveTask, selected:taskSelector(state)  }
+  return { tasks, selected:taskSelector(state)  }
 }
 
 const InboxContainer = connect(mapStateToProps, actions )(Inbox);
