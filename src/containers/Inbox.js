@@ -3,9 +3,12 @@ import InputBar from '../components/InputBar';
 import FloatActionButton from '../components/FloatActionButton';
 import { connect } from 'react-redux';
 import Delete from 'material-ui/svg-icons/action/delete';
+import DoneAll from 'material-ui/svg-icons/action/done-all';
 import Undo from 'material-ui/svg-icons/content/undo';
 import TaskItem from '../components/TaskItem';
+import Tag from 'material-ui/svg-icons/action/label';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import FloatActionButtonList from '../components/FloatActionButtonList';
 import taskSelector from '../selectors/taskSelector';
 import * as taskActions from '../actions/TaskActions';
 import * as tagActions from '../actions/TagActions';
@@ -16,6 +19,28 @@ const transitionOptions = {
       transitionEnterTimeout: 300,
       transitionLeaveTimeout: 300
     };
+
+const FabListStyle = [
+  {
+    position:'fixed',
+    bottom: 30,
+    right: 30,
+    zIndex: 100
+  },
+  {
+    position:'fixed',
+    bottom: 100,
+    right: 30,
+    zIndex: 100
+  },
+  {
+    position:'fixed',
+    bottom: 170,
+    right: 30,
+    zIndex: 100
+  },
+
+];
 
 class Inbox extends Component {
 
@@ -46,6 +71,53 @@ class Inbox extends Component {
       )
   }
 
+  updateButton(){
+    if(!this.state.editMode){
+      if(Object.keys(this.props.tasks).length === 0){
+        return (
+          <FloatActionButton  
+            disabled={ true }
+            clickFab={()=>console.log('hey')} 
+            Icon={ <Undo/>} 
+          />
+        )
+      }else{
+        return(
+          <FloatActionButton  
+            disabled={ false } 
+            clickFab={()=>console.log('hey')}
+            Icon={ <Undo/>}
+          />
+        )
+      }
+    }else{
+      return (
+        <ul>
+        <FloatActionButton  
+          disabled={ false } 
+          Icon={ <Tag/>}
+          clickFab={()=>console.log('hey')}
+          style={FabListStyle[0]}
+        />
+        
+        <FloatActionButton  
+          disabled={ false } 
+          Icon={ <DoneAll/>}
+          clickFab={()=>console.log('hey')}
+          style={FabListStyle[1]}
+        />
+        <FloatActionButton  
+          disabled={ false } 
+          secondary={true}
+          Icon={ <Delete/>}
+          clickFab={()=>console.log('hey')}
+          style={FabListStyle[2]}
+        />
+        </ul>
+      )
+    }
+  }
+
   updateButtonEnable(){
     return (Object.keys(this.props.tasks).length === 0 ? false: true);
   }
@@ -59,11 +131,7 @@ class Inbox extends Component {
           callBack={(text)=>{ this.props.addTask(text) } }
           hintText="Type any stuff in your mind." 
         />
-        <FloatActionButton  
-          secondary={ this.state.editMode }
-          disabled={!this.updateButtonEnable() && !this.state.editMode} 
-          clickFab={()=>{  }} 
-          Icon={ this.state.editMode ? <Delete/> : <Undo/>} />
+        {this.updateButton()}
       </div>
     )
   }
