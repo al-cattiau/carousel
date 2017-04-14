@@ -1,27 +1,20 @@
 import React, {Component} from 'react';
 import { ListItem } from 'material-ui/List';
-import Done from 'material-ui/svg-icons/action/done';
 import Circle from 'material-ui/svg-icons/toggle/radio-button-unchecked';
 import RightArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import DownArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import Paper from 'material-ui/Paper';
 
-
 let longPress = false;
-
-
-
 class TaskItem  extends Component {
   state = { bePressed: false }
   handleLongPressUp(e, taskId, toggleDetailMode){
     if(this.timer){
       toggleDetailMode(taskId);
       clearTimeout(this.timer);      
-    }
-    
+    } 
     longPress= false;
   }
-
   handleLongPressDown(e, taskId, toggleEditMode){
     longPress= true;
     this.timer = setTimeout( ()=>{
@@ -42,28 +35,17 @@ class TaskItem  extends Component {
       return null;
     }
   }
-
   render(){
-    const { toggleDetailMode,toggleEditMode,isDetailList, toggleCompleted, taskObject, taskId } = this.props;
-    const { taskName, priority, completed } = taskObject ;
+    const { toggleDetailMode, toggleEditMode, isEditMode, isDetailList, toggleCompleted, taskObject, taskId } = this.props;
+    const { taskName, priority } = taskObject ;
     const leftIcon = isDetailList ? 
       <DownArrow /> :
       <RightArrow />;
-
-    const rightIcon = completed ?
-      <Done 
-      onMouseDown={(e)=> { e.stopPropagation(); toggleCompleted(taskId)} }
-      onMouseUp={(e)=>{ e.stopPropagation();} }
-      /> : 
+    const rightIcon = 
       <Circle onMouseDown={(e)=>{ e.stopPropagation(); toggleCompleted(taskId)} }
         onMouseUp={(e)=>{ e.stopPropagation();} }
       />;
-
-    let style = priority ? {'color':'red'} : { } ;
-    if (completed){ 
-      style.backgroundColor= '#E0E0E0';
-    }
-
+    let style = priority ? {'color':'red'} : null;
     return (
       <div>
         <ListItem             
@@ -76,12 +58,8 @@ class TaskItem  extends Component {
         />
         {this.detail(isDetailList)}
       </div>
-      
-      
     );
-
   }
-
 }
 
 

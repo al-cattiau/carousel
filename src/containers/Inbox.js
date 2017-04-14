@@ -64,7 +64,8 @@ class Inbox extends Component {
         <TaskItem 
           key={taskId} 
           taskObject={ taskObject} 
-          taskId={ taskId } 
+          taskId={ taskId }
+          isEditMode={this.state.editMode} 
           isDetailList={ taskId === this.state.detailList }
           toggleDetailMode={ (taskId)=>{if(taskId===this.state.detailList){this.setState({detailList:null})}else{ this.setState({detailList: taskId})}} }
           toggleCompleted={ (taskId)=>this.props.toggleCompleted(taskId) }
@@ -74,7 +75,6 @@ class Inbox extends Component {
   }
 
   updateButton(){
-
     if(!this.state.editMode){
       return (
         <FloatActionButtonList buttons={this.buttonsInNormal}/>
@@ -99,21 +99,27 @@ class Inbox extends Component {
 
   }
 
-  render(){
+  updateInputBar(){
+    if(this.state.editMode){
+      return null;
+    }else{
+      return (
+        <InputBar 
+          callBack={(text)=>{ this.handleAddTask(text) } }
+          hintText="Type any stuff in your mind." 
+        />
+      )
+    } 
+  }
 
-    
+  render(){
     return (
       <div>
         <ReactCSSTransitionGroup {...transitionOptionsMaker('fade')}>
           {this.updateTask()}
         </ReactCSSTransitionGroup>
-        <InputBar 
-          callBack={(text)=>{ this.handleAddTask(text) } }
-          hintText="Type any stuff in your mind." 
-        />
-        
+          {this.updateInputBar()}
           {this.updateButton()}
-        
       </div>
     )
   }
