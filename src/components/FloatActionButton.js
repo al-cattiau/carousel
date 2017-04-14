@@ -8,11 +8,13 @@ const FabStyle = {
 };
 
 const Button = (props) => {
-  const { secondary, clickFab, disabled, Icon, style } = props;
+  const { secondary, clickFab, disabled, Icon, style, backgroundColor } = props;
     return(
-      <FloatingActionButton style={style} onTouchTap={clickFab} disabled={disabled} secondary={secondary}>
+      <div>
+      <FloatingActionButton backgroundColor={backgroundColor}  className="FAB" style={style} onTouchTap={clickFab} disabled={disabled} secondary={secondary}>
           {Icon}
       </FloatingActionButton>
+      </div>
     )
 }
 
@@ -27,7 +29,8 @@ Button.propTypes = {
   clickFab: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   Icon: PropTypes.node.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object,
+  backgroundColor: PropTypes.string,
 }
 
 export default Button;

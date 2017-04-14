@@ -12,6 +12,7 @@ export const TOGGLE_DETAIL_MODE = 'TOGGLE_DETAIL_MODE';
 export const SELECT_A_TASK = 'SELECT_A_TASK';
 export const DE_SELECT_A_TASK = 'DE_SELECT_A_TASK';
 export const CLEAR_SELECTED_TASK = 'CLEAR_SELECTED_TASK';
+export const DELETE_TASKS = 'DELETE_TASKS';
 
 export type TaskAction = {
   type: string,
@@ -121,6 +122,20 @@ export const deleteTask = (id: number)=> ({
     id
   }
 }: TaskAction);
+
+export const deleteTasks = (ids: [number]) =>(dispatch: any)=>{
+  ids.forEach((id)=>dispatch(deleteTask(id)));
+};
+
+export const completeTasks = (ids: [number]) =>(dispatch: any)=>{
+  ids.forEach((id)=>dispatch(completeTasks(id)));
+};
+
+export const addPriorityTask = (text: string, id: number) =>(dispatch: any)=>{
+  dispatch( addTask(text) );
+  dispatch( togglePriority(id) );
+
+};
 
 // taskArguments is a array, which contains a bunch of array, each child array indicate the taskList arguments.
 export const batchOperation = (taskList: any[], taskArguments: any[][] ) => (dispatch: any) =>{

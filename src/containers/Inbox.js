@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import InputBar from '../components/InputBar';
-import FloatActionButton from '../components/FloatActionButton';
 import { connect } from 'react-redux';
 import Delete from 'material-ui/svg-icons/action/delete';
 import DoneAll from 'material-ui/svg-icons/action/done-all';
 import Undo from 'material-ui/svg-icons/content/undo';
+import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import TaskItem from '../components/TaskItem';
 import Tag from 'material-ui/svg-icons/action/label';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -14,48 +14,49 @@ import * as taskActions from '../actions/TaskActions';
 import * as tagActions from '../actions/TagActions';
 const actions = Object.assign({}, tagActions, taskActions);
 
-const transitionOptions = {
-      transitionName: 'fade',
-      transitionEnterTimeout: 300,
-      transitionLeaveTimeout: 300
-    };
 
-const FabListStyle = [
-  {
-    position:'fixed',
-    bottom: 30,
-    right: 30,
-    zIndex: 100
-  },
-  {
-    position:'fixed',
-    bottom: 100,
-    right: 30,
-    zIndex: 100
-  },
-  {
-    position:'fixed',
-    bottom: 170,
-    right: 30,
-    zIndex: 100
-  },
 
-];
+const transitionOptionsMaker = (name)=>({
+  transitionName: name,
+  transitionEnterTimeout: 300,
+  transitionLeaveTimeout: 300
+
+})
+
 
 class Inbox extends Component {
 
-  componentDidMount(){
-    this.props.selectATask(0);
+  constructor(props) {
+    super(props);
+    this.state = { editMode: false, detailList: null };
+    this.buttonsInEditMode = [
+      { Icon: <Cancel/>, callback: ()=>this.setState({editMode:false}) , backgroundColor: "#F50057"  }, 
+      { Icon: <Delete />, callback:  props.deleteTasks , secondary:true },
+      { Icon: <DoneAll />, callback: props.completeTasks },
+    ];
+    
+    this.buttonsInNormal = [
+       { Icon: <Undo/>, callback: ()=>console.log('ss')  }, 
+    ]
   }
 
-  state = { editMode: false }
+  componentDidMount(){
+    this.props.addTag("hello", "#D500F9");
+    this.props.addTag("key", "#FFEB3B");
+    this.props.addTag("nerd", "#3F51B5");
+
+  }
+
 
   componentWillUnmount(){
+    
   }
 
   toggleEditMode(){
-
-    this.setState({ editMode: !this.state.editMode });
+    this.setState({
+       editMode: !this.state.editMode,
+       detailList: null
+    });
   }
 
   updateTask(){
@@ -63,8 +64,9 @@ class Inbox extends Component {
         <TaskItem 
           key={taskId} 
           taskObject={ taskObject} 
-          taskId={ taskId} 
-          toggleDetailMode={ (taskId)=>this.props.toggleDetailMode(taskId) } 
+          taskId={ taskId } 
+          isDetailList={ taskId === this.state.detailList }
+          toggleDetailMode={ (taskId)=>{if(taskId===this.state.detailList){this.setState({detailList:null})}else{ this.setState({detailList: taskId})}} }
           toggleCompleted={ (taskId)=>this.props.toggleCompleted(taskId) }
           toggleEditMode={ ()=>this.toggleEditMode()}
         />
@@ -72,66 +74,46 @@ class Inbox extends Component {
   }
 
   updateButton(){
+
     if(!this.state.editMode){
-      if(Object.keys(this.props.tasks).length === 0){
-        return (
-          <FloatActionButton  
-            disabled={ true }
-            clickFab={()=>console.log('hey')} 
-            Icon={ <Undo/>} 
-          />
-        )
-      }else{
-        return(
-          <FloatActionButton  
-            disabled={ false } 
-            clickFab={()=>console.log('hey')}
-            Icon={ <Undo/>}
-          />
-        )
-      }
-    }else{
       return (
-        <ul>
-        <FloatActionButton  
-          disabled={ false } 
-          Icon={ <Tag/>}
-          clickFab={()=>console.log('hey')}
-          style={FabListStyle[0]}
-        />
-        
-        <FloatActionButton  
-          disabled={ false } 
-          Icon={ <DoneAll/>}
-          clickFab={()=>console.log('hey')}
-          style={FabListStyle[1]}
-        />
-        <FloatActionButton  
-          disabled={ false } 
-          secondary={true}
-          Icon={ <Delete/>}
-          clickFab={()=>console.log('hey')}
-          style={FabListStyle[2]}
-        />
-        </ul>
+        <FloatActionButtonList buttons={this.buttonsInNormal}/>
+      )
+    }else{
+      this.tagsButton = Object.entries(this.props.tags).map(
+       ([tagId, tag]) => ({ Icon: <Tag/>, callback: ()=>this.setState({editMode:false}) , backgroundColor: tag.color })
+      );
+      return (
+        <FloatActionButtonList buttons={[...this.buttonsInEditMode, ...this.tagsButton]}/>
       )
     }
   }
 
-  updateButtonEnable(){
-    return (Object.keys(this.props.tasks).length === 0 ? false: true);
+  handleAddTask(text){
+    if (text.indexOf('#') === text.length-1){
+      const pureText = text.substr(0,text.length-1)
+       this.props.addPriorityTask(pureText,this.props.nextTaskId );
+    }else{
+      this.props.addTask(text);
+    }
+
   }
+
   render(){
+
+    
     return (
       <div>
-        <ReactCSSTransitionGroup {...transitionOptions}>
+        <ReactCSSTransitionGroup {...transitionOptionsMaker('fade')}>
           {this.updateTask()}
         </ReactCSSTransitionGroup>
         <InputBar 
-          callBack={(text)=>{ this.props.addTask(text) } }
+          callBack={(text)=>{ this.handleAddTask(text) } }
           hintText="Type any stuff in your mind." 
         />
-        {this.updateButton()}
+        
+          {this.updateButton()}
+        
       </div>
     )
   }
@@ -142,7 +124,9 @@ const mapStateToProps = (state) => {
   Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
     if(!taskObject.completed){ tasks[taskId] = taskObject }
   });
-  return { tasks, selected:taskSelector(state)  }
+  const tags=state.TagReducer.tags;
+  const nextTaskId = state.TaskReducer.nextTaskId;
+  return { tasks, selected:taskSelector(state), tags, nextTaskId  }
 }
 
 const InboxContainer = connect(mapStateToProps, actions )(Inbox);

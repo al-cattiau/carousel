@@ -6,7 +6,7 @@ html, body {
   height:100%;
   margin: 0;
   padding: 0;
-
+  font-family: Arial, Helvetica, sans-serif
 
 }
 
@@ -28,6 +28,7 @@ html, body {
     transition:  .3s ease-in all;
 }
 
+
 .fade-leave {
     position: relative;
     left: 0px;
@@ -42,3 +43,16 @@ html, body {
     -moz-transition:  .3s ease-out all;
     transition:  .3s ease-out all;
 }
+
+.FAB {
+    animation: shot .1s ease-in-out
+}
+@keyframes shot {
+  0%{
+    position: fixed;
+    bottom: 0px;
+    right: 30px;
+  }
+
+}
+

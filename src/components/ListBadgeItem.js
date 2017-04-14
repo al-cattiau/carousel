@@ -23,7 +23,7 @@ const listItemStyleInPortrait = {
 export default (props) => {
   const { mode, item, isHightlight, index } = props;
   let { text } = item;
-  const badgeCount = props.badgeCount < 10 ? props.badgeCount : '∞';
+  const badgeCount = props.badgeCount < 99 ? props.badgeCount : '∞';
   let listItemStyle, badgeStyle ;
   if (mode === 'landsacpe'){
     listItemStyle = isHightlight? 

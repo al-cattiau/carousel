@@ -4,6 +4,8 @@ import Done from 'material-ui/svg-icons/action/done';
 import Circle from 'material-ui/svg-icons/toggle/radio-button-unchecked';
 import RightArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import DownArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import Paper from 'material-ui/Paper';
+
 
 let longPress = false;
 
@@ -31,11 +33,20 @@ class TaskItem  extends Component {
       }
     }, 400);
   }
+  detail(isDetailList){
+    if (isDetailList){
+      return(
+        <Paper style={{'height':'200px'}} />
+      )
+    }else{
+      return null;
+    }
+  }
 
   render(){
-    const { toggleDetailMode,toggleEditMode, toggleCompleted, taskObject, taskId } = this.props;
+    const { toggleDetailMode,toggleEditMode,isDetailList, toggleCompleted, taskObject, taskId } = this.props;
     const { taskName, priority, completed } = taskObject ;
-    const leftIcon = taskObject.detailMode ? 
+    const leftIcon = isDetailList ? 
       <DownArrow /> :
       <RightArrow />;
 
@@ -52,15 +63,21 @@ class TaskItem  extends Component {
     if (completed){ 
       style.backgroundColor= '#E0E0E0';
     }
+
     return (
-      <ListItem             
-        primaryText={ taskName }  
-        rightIcon={ rightIcon }  
-        leftIcon={ leftIcon }
-        style={style}
-        onMouseDown={(e)=>{ e.stopPropagation(); this.handleLongPressDown(e, taskId, toggleEditMode);}}
-        onMouseUp={(e)=>{  e.stopPropagation(); this.handleLongPressUp(e, taskId, toggleDetailMode);}}
-      />   
+      <div>
+        <ListItem             
+          primaryText={ taskName }  
+          rightIcon={ rightIcon }  
+          leftIcon={ leftIcon }
+          style={style}
+          onMouseDown={(e)=>{ e.stopPropagation(); this.handleLongPressDown(e, taskId, toggleEditMode);}}
+          onMouseUp={(e)=>{  e.stopPropagation(); this.handleLongPressUp(e, taskId, toggleDetailMode);}}
+        />
+        {this.detail(isDetailList)}
+      </div>
+      
+      
     );
 
   }
