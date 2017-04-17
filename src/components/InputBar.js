@@ -28,7 +28,9 @@ class Inputbar extends React.Component {
     if(noSpaceText.length <1){
       return;
     }
-
+    if(noSpaceText.length===1 && noSpaceText[0]==='#'){
+      return;
+    }
     e.preventDefault();
     this.props.callBack(this.state.text);
     this.setState({

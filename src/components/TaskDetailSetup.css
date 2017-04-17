@@ -1,0 +1,42 @@
+.detailContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start ;
+  
+  align-items: center;
+
+}
+
+
+.text {
+  /*background-color: lightcyan;*/
+  width: 120px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2196F3;
+
+  
+
+}
+
+
+
+.component {
+
+  /*background-color: lightskyblue;*/
+  width: 256px;
+
+}
+
+.innercontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+
+.fullwidth {
+  width: 100%
+}

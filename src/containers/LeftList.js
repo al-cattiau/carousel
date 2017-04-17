@@ -12,7 +12,6 @@ import * as taskActions from '../actions/TaskActions';
 import * as tagActions from '../actions/TagActions';
 import ListBadgeitem from '../components/ListBadgeItem';
 
-
 const actions = Object.assign({}, tagActions, taskActions);
 
 class Leftlist extends Component{
@@ -63,20 +62,21 @@ Leftlist.propTypes = {
   hightLight: PropTypes.string.isRequired
 };
 
-const computeInboxListBadge=(tasks)=> (
-  _.filter(
-    tasks,
-    task => (task.completed === false && task.active === true)
-  ).length
-);
+const computeInboxListBadge=(tasks, tags)=> {
+  let count = 0;
+  Object.entries(tasks).forEach( ([taskId, taskObject]) =>{    
+    const inTag = Object.entries(tags).find( ([tagId, tagObject ]) => tagObject.tasks.includes(taskId) )
+    if(!taskObject.completed && taskObject.active && !inTag   ){  count += 1; }
+  });
+  return count;
 
-
+}
 
 const mapStateToProps = (state) => {
   return {
     hightLight: state.routing.locationBeforeTransitions.pathname,
     tags: state.TagReducer.tags,
-    inboxCount: computeInboxListBadge(state.TaskReducer.tasks),
+    inboxCount: computeInboxListBadge(state.TaskReducer.tasks, state.TagReducer.tags),
   };
 };
 

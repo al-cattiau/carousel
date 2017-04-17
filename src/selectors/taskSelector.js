@@ -8,9 +8,10 @@ const selectTaskIdSelector = (state) => state.TaskReducer.selectedTaskId;
 const getTasks = (tasks, selectedTaskIds ) => {
   const selectedTask = _.filter(
     tasks,
-    (task, key)=> _.includes(selectedTaskIds, Number(key))
+    (task, key)=> _.includes(selectedTaskIds, key)
     
   )
+
   return selectedTask;
 
 }

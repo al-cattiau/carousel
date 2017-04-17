@@ -5,17 +5,19 @@
   height: 100%;
 }
 
-.leftList {
+/*.leftList {
   width: 160px;
   position: fixed;
   float: left;
   height: 100%;
-}
+  margin-top: 65px;
+}*/
 
 .right {
   flex-grow: 1;
   margin-left: 160px;
   height: 100%;
+  margin-top: 65px;
 }
 
 .content {
@@ -23,18 +25,19 @@
   width: 90%;
   max-width: 1000px;
   margin: auto;
+  
 }
 
 
-@media screen and (max-width:500px) {
+/*@media screen and (max-width:630px) {
   .leftList {
-    width: 55px;
+    width: 50px;
   }
   .right {
-    margin-left: 55px;
+    margin-left: 50px;
   }
   .content{
     width: 100%
   }
 
-}
+}*/

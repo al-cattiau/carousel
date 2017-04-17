@@ -7,11 +7,13 @@ import Undo from 'material-ui/svg-icons/content/undo';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import TaskItem from '../components/TaskItem';
 import Tag from 'material-ui/svg-icons/action/label';
+import Priority from 'material-ui/svg-icons/notification/priority-high';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import FloatActionButtonList from '../components/FloatActionButtonList';
 import taskSelector from '../selectors/taskSelector';
 import * as taskActions from '../actions/TaskActions';
 import * as tagActions from '../actions/TagActions';
+import { ListItem } from 'material-ui/List';
 const actions = Object.assign({}, tagActions, taskActions);
 
 
@@ -23,27 +25,21 @@ const transitionOptionsMaker = (name)=>({
 
 })
 
+const hightlightedStyle= {
+  backgroundColor: '#E0E0E0'
+}
 
 class Inbox extends Component {
 
   constructor(props) {
     super(props);
     this.state = { editMode: false, detailList: null };
-    this.buttonsInEditMode = [
-      { Icon: <Cancel/>, callback: ()=>this.setState({editMode:false}) , backgroundColor: "#F50057"  }, 
-      { Icon: <Delete />, callback:  props.deleteTasks , secondary:true },
-      { Icon: <DoneAll />, callback: props.completeTasks },
-    ];
-    
-    this.buttonsInNormal = [
-       { Icon: <Undo/>, callback: ()=>console.log('ss')  }, 
-    ]
   }
 
   componentDidMount(){
-    this.props.addTag("hello", "#D500F9");
-    this.props.addTag("key", "#FFEB3B");
-    this.props.addTag("nerd", "#3F51B5");
+    // this.props.addTag("hello", "#D500F9");
+    // this.props.addTag("key", "#FFEB3B");
+    // this.props.addTag("nerd", "#3F51B5");
 
   }
 
@@ -60,21 +56,55 @@ class Inbox extends Component {
   }
 
   updateTask(){
-    return Object.entries(this.props.tasks).map( ([taskId, taskObject]) =>
+    if (this.state.editMode){
+      return Object.entries(this.props.tasks).map( ([taskId, taskObject]) =>{
+        let style = this.props.selectedTaskId.includes(taskId) ? hightlightedStyle: {};
+        style = taskObject.priority ? Object.assign({'color':'#B71C1C'}, style ) : style;
+        return(
+          <ListItem
+            key={taskId}
+            primaryText={ taskObject.taskName }
+            onMouseDown={()=>this.props.toggleSelectATask(taskId)}
+            style={style}
+          />
+        )
+      }
+      )
+    }else{
+      return Object.entries(this.props.tasks).map( ([taskId, taskObject]) =>
         <TaskItem 
           key={taskId} 
           taskObject={ taskObject} 
+          tags={this.props.tags}
           taskId={ taskId }
-          isEditMode={this.state.editMode} 
+          selectId={()=>this.props.selectATask(taskId)}
           isDetailList={ taskId === this.state.detailList }
+          editTaskName={(id, taskName)=>this.props.editTaskName(id, taskName)}
+          togglePriority={(id)=> this.props.togglePriority(id) }
+          setTaskDueDate={(id, dueDate)=>this.props.setTaskDueDate(id, dueDate)}
+          setTaskDeferDate={(id, deferDate)=>this.props.setTaskDeferDate(id, deferDate)}
+          associateTaskWithTag={(id, taskId)=>this.props.associateTaskWithTag(id, taskId)}
           toggleDetailMode={ (taskId)=>{if(taskId===this.state.detailList){this.setState({detailList:null})}else{ this.setState({detailList: taskId})}} }
           toggleCompleted={ (taskId)=>this.props.toggleCompleted(taskId) }
           toggleEditMode={ ()=>this.toggleEditMode()}
+          setPredictTime={()=>this.setPredictTime()}
         />
       )
+    }
   }
 
   updateButton(){
+    this.buttonsInEditMode = [
+      { Icon: <Cancel/>, callback: ()=>{this.setState({editMode:false});this.props.clearSelectedTask(); } , backgroundColor: "#F50057"  }, 
+      { Icon: <Delete />, callback:  ()=>{this.props.toggleActives(this.props.selectedTaskId);this.props.clearSelectedTask(); }, secondary:true },
+      { Icon: <DoneAll />, callback: ()=>{this.props.completeTasks(this.props.selectedTaskId); this.props.clearSelectedTask(); }},
+      { Icon: <Priority />, callback: ()=> this.props.priorityTasks(this.props.selectedTaskId) , backgroundColor: '#B71C1C'},
+       
+    ];
+    
+    this.buttonsInNormal = [
+       { Icon: <Undo/>, callback: ()=>console.log('ss')  }, 
+    ];
     if(!this.state.editMode){
       return (
         <FloatActionButtonList buttons={this.buttonsInNormal}/>
@@ -128,11 +158,13 @@ class Inbox extends Component {
 const mapStateToProps = (state) => {
   const tasks ={} 
   Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
-    if(!taskObject.completed){ tasks[taskId] = taskObject }
+    const inTag = Object.entries(state.TagReducer.tags).find( ([tagId, tagObject ]) => tagObject.tasks.includes(taskId) )
+    if(!taskObject.completed && taskObject.active && !inTag   ){ tasks[taskId] = taskObject }
   });
   const tags=state.TagReducer.tags;
   const nextTaskId = state.TaskReducer.nextTaskId;
-  return { tasks, selected:taskSelector(state), tags, nextTaskId  }
+  const selectedTaskId = state.TaskReducer.selectedTaskId;
+  return { tasks, selected:taskSelector(state), tags, nextTaskId, selectedTaskId  }
 }
 
 const InboxContainer = connect(mapStateToProps, actions )(Inbox);

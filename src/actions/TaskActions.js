@@ -13,6 +13,8 @@ export const SELECT_A_TASK = 'SELECT_A_TASK';
 export const DE_SELECT_A_TASK = 'DE_SELECT_A_TASK';
 export const CLEAR_SELECTED_TASK = 'CLEAR_SELECTED_TASK';
 export const DELETE_TASKS = 'DELETE_TASKS';
+export const TOGGLE_SELECT_A_TASK = 'TOGGLE_SELECT_A_TASK';
+export const EDIT_TASK_NAME = 'EDIT_TASK_NAME';
 
 export type TaskAction = {
   type: string,
@@ -33,10 +35,26 @@ export const deSelectATASK = (id: number)=>({
   }
 });
 
+export const toggleSelectATask = (id: number)=>({
+  type: TOGGLE_SELECT_A_TASK,
+  payload: {
+    id
+  }
+});
+
 export const clearSelectedTask = ()=>({
   type: CLEAR_SELECTED_TASK,
   payload: {
   }
+});
+
+export const editTaskName = (id: number, taskName: string)=>({
+  type: EDIT_TASK_NAME,
+  payload: {
+    id,
+    taskName
+  }
+
 });
 
 export const selectATask = (id: number)=>({
@@ -74,6 +92,7 @@ export const togglePriority = (id: number)=>({
     id,
   }
 }: TaskAction);
+
 
 export const toggleActive = (id: number)=> ({
   type: TOGGLE_ACTIVE,
@@ -127,8 +146,16 @@ export const deleteTasks = (ids: [number]) =>(dispatch: any)=>{
   ids.forEach((id)=>dispatch(deleteTask(id)));
 };
 
+export const toggleActives = (ids: [number]) =>(dispatch: any)=>{
+  ids.forEach((id)=>dispatch(toggleActive(id)));
+};
+
 export const completeTasks = (ids: [number]) =>(dispatch: any)=>{
-  ids.forEach((id)=>dispatch(completeTasks(id)));
+  ids.forEach((id)=>dispatch(toggleCompleted(id)));
+};
+
+export const priorityTasks = (ids: [number]) =>(dispatch: any)=>{
+  ids.forEach((id)=>dispatch(togglePriority(id)));
 };
 
 export const addPriorityTask = (text: string, id: number) =>(dispatch: any)=>{
@@ -137,9 +164,3 @@ export const addPriorityTask = (text: string, id: number) =>(dispatch: any)=>{
 
 };
 
-// taskArguments is a array, which contains a bunch of array, each child array indicate the taskList arguments.
-export const batchOperation = (taskList: any[], taskArguments: any[][] ) => (dispatch: any) =>{
-  taskList.forEach((task, index)=>task(...taskArguments[index]));
-
-
-};

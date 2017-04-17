@@ -15,9 +15,20 @@ type initialStateType = {
   nextTagId: number
 }
 
-const initialState: initialStateType = {
-  tags: {},
-  nextTagId: 0,
+const initialState: any = {
+  tags: {
+    '0':{
+      'tagName': 'work',
+      'color': '#D500F9',
+      'tasks': []   
+    },
+    '1':{
+      'tagName': 'relax',
+      'color': '#FFEB3B',
+      'tasks': []   
+    }
+  },
+  nextTagId: 2,
 }
 
 const TagReducer = (state: any=initialState, action: any) =>{
@@ -31,7 +42,8 @@ const TagReducer = (state: any=initialState, action: any) =>{
             ...state.tags,
             [state.nextTagId]: {
               tagName,
-              color
+              color,
+              tasks: []              
             }
           },
           nextTagId: state.nextTagId+1
@@ -74,10 +86,11 @@ const TagReducer = (state: any=initialState, action: any) =>{
           ...state.tags,
           [id]: {
             ...state.tags[id],
-            tasks: {
+            tasks:[  
               ...state.tags[id].tasks,
               taskId
-            }
+             ]
+
           }
         }
       });
@@ -91,7 +104,7 @@ const TagReducer = (state: any=initialState, action: any) =>{
           ...state.tags,
           [id]: {
             ...state.tags[id],
-            tasks: _.omit(state.tags[id].tasks, taskId)
+            tasks: state.tags[id].filter((oldTaskId)=> oldTaskId !== taskId )
           }
         }
       });

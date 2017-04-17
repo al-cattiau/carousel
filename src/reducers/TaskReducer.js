@@ -13,7 +13,9 @@ import {
   TOGGLE_DETAIL_MODE,
   SELECT_A_TASK,
   DE_SELECT_A_TASK,
-  CLEAR_SELECTED_TASK
+  CLEAR_SELECTED_TASK,
+  TOGGLE_SELECT_A_TASK,
+  EDIT_TASK_NAME
  } from '../actions/TaskActions';
  import type { TaskAction } from '../actions/TaskActions';
 
@@ -53,6 +55,7 @@ const TaskReducer = (state: any=initialState, action: TaskAction) => {
             completed: false,
             active: true,
             detailMode: false,
+            priority: false
           }
         },
         nextTaskId: state.nextTaskId + 1
@@ -68,6 +71,20 @@ const TaskReducer = (state: any=initialState, action: TaskAction) => {
           [id]: {
             ...state.tasks[id],
             detailMode: !state.tasks[id].detailMode ,
+          }
+        },
+      });
+    }
+
+    case EDIT_TASK_NAME:{
+      const { id, taskName } = payload;
+      return Object.assign({}, {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          [id]: {
+            ...state.tasks[id],
+            taskName,
           }
         },
       });
@@ -172,22 +189,47 @@ const TaskReducer = (state: any=initialState, action: TaskAction) => {
     }
 
     case DELETE_TASK:{
+      
       const { id } = payload;
       return Object.assign({}, {
         ...state,
-        tesks: _.omit(state.tasks, id),
+        tasks: _.omit(state.tasks, id),
       });
     }
 
     case SELECT_A_TASK: {
       const { id } = payload;
-      return Object.assign({}, {
-        ...state,
-        selectedTaskId:[
-          ...state.selectedTaskId,
-          id
-        ]
-      });
+      if (state.selectedTaskId.includes(id)){
+        return state;
+      }else{
+        return Object.assign({}, {
+          ...state,
+          selectedTaskId:[
+            ...state.selectedTaskId,
+            id
+          ]
+        });
+      }
+    }
+
+    case TOGGLE_SELECT_A_TASK:{
+      const { id } = payload;
+      if (state.selectedTaskId.includes(id)){
+        return Object.assign({}, {
+          ...state,
+          selectedTaskId:
+            state.selectedTaskId.filter((selectedId)=> selectedId !== id.toString() ),
+          
+        });        
+      }else{
+        return Object.assign({}, {
+          ...state,
+          selectedTaskId:[
+            ...state.selectedTaskId,
+            id
+          ]
+        });
+      }
     }
 
     case DE_SELECT_A_TASK: {
