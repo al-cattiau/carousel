@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import Archive from 'material-ui/svg-icons/content/archive';
 import Delete from 'material-ui/svg-icons/action/delete';
 import Tag from 'material-ui/svg-icons/action/label';
 import Forecast from 'material-ui/svg-icons/notification/event-note';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import ListBadgeitem from '../components/ListBadgeItem';
 
 
 class Leftlist extends Component{
@@ -19,30 +19,30 @@ class Leftlist extends Component{
       {icon:<Tag  />,text:'Tag', count:props.tagCount},
       {icon:<Delete  />,text:'Trash', count:props.trashCount},
     ];
-    this.hightLightIndex = this.items.findIndex((item)=> `/${item.text}` === this.props.hightLight  );
+    
   }
+  
 
-  renderList(){
-    return this.items.map((item) => (<MenuItem key={item.text}>{item.text}</MenuItem>) )
+  renderList(hightLight, count){
+    this.hightLightIndex = this.items.findIndex((item)=> `/${item.text}` === hightLight  );
+    return this.items.map((item, index) => (<ListBadgeitem  badgeCount={count} key={item.text} item={item} isHightlight={index===this.hightLightIndex} index={index} close={()=>this.props.close()} />) )
   }
   render(){
     return(
       <Drawer
-        docked={true}
-        width={200}
-        open={this.state.open}
-        onRequestChange={(open) => this.setState({open})}
+        width={160}
+        open={ this.props.isLandscape ? true: this.props.openList}
+        docked={ this.props.isLandscape }
+        onRequestChange={() => this.props.close() }
       >
-        {this.renderList()}
+        <div className='appTitle'>Carousel</div>
+        {this.renderList(this.props.hightLight, this.props.inboxCount)}
       </Drawer>
     )
   }
 
-
-
-
-
 }
+
 
 
 export default Leftlist;

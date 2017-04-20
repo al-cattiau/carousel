@@ -1,0 +1,92 @@
+.forecastPaper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center ;
+  margin-top: 1px;
+  align-items: flex-start;
+  height: 500px;
+  
+}
+
+.forecastContent{
+  height: 500px;
+  width: 300px;
+
+}
+
+.detailContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start ;
+  
+  align-items: center;
+
+}
+
+
+.text {
+  /*background-color: lightcyan;*/
+  width: 120px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2196F3;
+
+  
+
+}
+.appContent {
+  padding-top: 68px;
+  margin-left: 5px;
+  margin-right: 5px;
+
+
+}
+
+@media screen and (min-width:630px) {
+  .appContent {
+    margin-left: 170px;
+  }
+
+}
+
+.appTitle {
+  font-weight: 200;
+  height: 64px;
+  font-size: 30px;
+  width: 160px;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+  color: white;
+  background: #00BCD4;
+
+
+}
+
+.component {
+  width: 256px;
+}
+
+.innercontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+
+.fullwidth {
+  width: 100%
+}
+
+
+.trashContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start ;
+  align-items: center;
+  
+
+}
+

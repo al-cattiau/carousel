@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as taskActions from '../actions/TaskActions';
 import * as tagActions from '../actions/TagActions';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 const actions = Object.assign({}, tagActions, taskActions);
 
 class Tags extends Component {

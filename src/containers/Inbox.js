@@ -13,9 +13,9 @@ import FloatActionButtonList from '../components/FloatActionButtonList';
 import taskSelector from '../selectors/taskSelector';
 import * as taskActions from '../actions/TaskActions';
 import * as tagActions from '../actions/TagActions';
+import { inInbox } from '../helperFunc/computeTask';
 import { ListItem } from 'material-ui/List';
 const actions = Object.assign({}, tagActions, taskActions);
-
 
 
 const transitionOptionsMaker = (name)=>({
@@ -85,9 +85,9 @@ class Inbox extends Component {
           setTaskDeferDate={(id, deferDate)=>this.props.setTaskDeferDate(id, deferDate)}
           associateTaskWithTag={(id, taskId)=>this.props.associateTaskWithTag(id, taskId)}
           toggleDetailMode={ (taskId)=>{if(taskId===this.state.detailList){this.setState({detailList:null})}else{ this.setState({detailList: taskId})}} }
-          toggleCompleted={ (taskId)=>this.props.toggleCompleted(taskId) }
+          completeTask={ (taskId)=>this.props.completeTask(taskId) }
           toggleEditMode={ ()=>this.toggleEditMode()}
-          setPredictTime={()=>this.setPredictTime()}
+          setPredictTime={()=>this.props.setPredictTime()}
         />
       )
     }
@@ -156,11 +156,7 @@ class Inbox extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const tasks ={} 
-  Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
-    const inTag = Object.entries(state.TagReducer.tags).find( ([tagId, tagObject ]) => tagObject.tasks.includes(taskId) )
-    if(!taskObject.completed && taskObject.active && !inTag   ){ tasks[taskId] = taskObject }
-  });
+  const tasks = inInbox(state);
   const tags=state.TagReducer.tags;
   const nextTaskId = state.TaskReducer.nextTaskId;
   const selectedTaskId = state.TaskReducer.selectedTaskId;

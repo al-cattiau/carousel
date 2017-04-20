@@ -15,7 +15,8 @@ import {
   DE_SELECT_A_TASK,
   CLEAR_SELECTED_TASK,
   TOGGLE_SELECT_A_TASK,
-  EDIT_TASK_NAME
+  EDIT_TASK_NAME,
+  COMPLETED_TASK
  } from '../actions/TaskActions';
  import type { TaskAction } from '../actions/TaskActions';
 
@@ -76,6 +77,8 @@ const TaskReducer = (state: any=initialState, action: TaskAction) => {
       });
     }
 
+    
+
     case EDIT_TASK_NAME:{
       const { id, taskName } = payload;
       return Object.assign({}, {
@@ -100,6 +103,22 @@ const TaskReducer = (state: any=initialState, action: TaskAction) => {
           [id]: {
             ...state.tasks[id],
             completed: !state.tasks[id].completed ,
+          }
+        },
+      });
+    }
+
+    case COMPLETED_TASK:{
+      const { id } = payload;
+      const completed_date= new Date();
+      return Object.assign({}, {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          [id]: {
+            ...state.tasks[id],
+            completed: true,
+            completed_date ,
           }
         },
       });

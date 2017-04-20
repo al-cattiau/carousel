@@ -2,33 +2,50 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as taskActions from '../actions/TaskActions';
 import * as tagActions from '../actions/TagActions';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import InfiniteCalendar from 'react-infinite-calendar';
-import 'react-infinite-calendar/styles.css'; 
-import Paper from 'material-ui/Paper';
-import './Forecast.css';
+import BigCalendar from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { taskWithDate  } from '../helperFunc/computeTask';
+
 const actions = Object.assign({}, tagActions, taskActions);
 
-var today = new Date();
-var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
 
+BigCalendar.setLocalizer(
+  BigCalendar.momentLocalizer(moment)
+);
 
 
 class Forecast extends Component {
-  constructor(props){
-    super(props);
+
+  computeEvens(){
+    return Object.entries(this.props.tasksWithDate).map( ([taskId, taskObject])=>
+      ({
+        title: taskObject.taskName,
+        start: taskObject.deferDate||taskObject.dueDate,
+        end: taskObject.dueDate||taskObject.deferDate,
+        priority: taskObject.priority
+      })
+    )
+
+
+  }
+
+
+  renderCalendar(){
+    return(
+      <BigCalendar
+        events={this.computeEvens()}
+        views={['month']}
+      />
+    )
   }
 
   render(){
     return(
       <div className='forecastPaper'>
-        <InfiniteCalendar
-          width={260}
-          height={260}
-          selected={today}
-          minDate={lastWeek}
-        />
+        <div className='forecastContent'>
+          {this.renderCalendar()}
+        </div>
       </div>
     )
   }
@@ -39,8 +56,8 @@ class Forecast extends Component {
 
 const mapStateToProps =  (state) => {
   const tags=state.TagReducer.tags;
-  const tasks = state.TaskReducer.tasks;
-  return { tags, tasks }
+  const tasksWithDate = taskWithDate(state.TaskReducer.tasks);
+  return { tags, tasksWithDate }
 
 }
 

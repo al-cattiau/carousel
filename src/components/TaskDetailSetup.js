@@ -3,10 +3,11 @@ import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
-import './TaskDetailSetup.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+
+
 
 export default class detailSetup  extends Component {
   
@@ -23,7 +24,26 @@ export default class detailSetup  extends Component {
 
   disablePassDate(date){
     const today = new Date();
-    return ( (date.getDate() <= today.getDate() && date.getMonth() === today.getMonth()) || date.getMonth() < today.getMonth());
+    return ( (date.getDate() < today.getDate() && date.getMonth() === today.getMonth()) || date.getMonth() < today.getMonth());
+  }
+
+  disablePassDateAndDueDate(date){
+    const dueDate = this.state.dueDate;
+    if(dueDate){
+      return ( (date.getDate() > dueDate.getDate() && date.getMonth() === dueDate.getMonth()) || date.getMonth() > dueDate.getMonth() ) || this.disablePassDate(date);
+    }else{
+      return this.disablePassDate(date);
+    }    
+  }
+  disablePassDateAndDeferDate(date){
+    const deferDate = this.state.deferDate;
+    if(deferDate){
+      return ( (date.getDate() < deferDate.getDate() && date.getMonth() === deferDate.getMonth()) || date.getMonth() < deferDate.getMonth() ) || this.disablePassDate(date);
+    }else{
+      return this.disablePassDate(date);
+    }
+
+
   }
 
   componentWillUnmount(){
@@ -59,7 +79,7 @@ export default class detailSetup  extends Component {
       <div className='innercontainer'>
         <div className='text'>Due date</div>
         <div className='component'>
-          <DatePicker hintText="same as deadline.(optional)" shouldDisableDate={this.disablePassDate} onChange={(e,date)=>this.setState({dueDate:date})} />
+          <DatePicker hintText="same as deadline.(optional)" shouldDisableDate={(date)=>this.disablePassDateAndDeferDate(date)} onChange={(e,date)=>this.setState({dueDate:date})} />
         </div>
       </div>
     )
@@ -70,7 +90,7 @@ export default class detailSetup  extends Component {
       <div className='innercontainer'>
         <div className='text'>Defer date</div>
         <div className='component'>
-          <DatePicker hintText="date to start.(optional)" shouldDisableDate={this.disablePassDate} onChange={(e,date)=>this.setState({deferDate:date})} />
+          <DatePicker hintText="date to start.(optional)" shouldDisableDate={(date)=>this.disablePassDateAndDueDate(date)} onChange={(e,date)=>this.setState({deferDate:date})} />
         </div>
       </div>  
     )

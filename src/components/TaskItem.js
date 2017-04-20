@@ -73,14 +73,14 @@ class TaskItem  extends Component {
   }
 
   render(){
-    const { toggleDetailMode, selectId, toggleEditMode, isDetailList, toggleCompleted, taskObject, taskId } = this.props;
+    const { toggleDetailMode, selectId, toggleEditMode, isDetailList, completeTask, taskObject, taskId } = this.props;
     const { taskName, priority } = taskObject ;
     const leftIcon = isDetailList ? 
       <DownArrow /> :
       <RightArrow />;
     const rightIcon = this.state.completed ? 
     <Done/> :
-      <Circle onMouseDown={(e)=>{ e.stopPropagation(); this.setState({completed:true}); toggleCompleted(taskId)} }
+      <Circle onMouseDown={(e)=>{ e.stopPropagation(); this.setState({completed:true}); completeTask(taskId)} }
         onMouseUp={(e)=>{ e.stopPropagation();} }
       /> ;
     let style = priority ? {'color':'#B71C1C'} : null;

@@ -15,6 +15,7 @@ export const CLEAR_SELECTED_TASK = 'CLEAR_SELECTED_TASK';
 export const DELETE_TASKS = 'DELETE_TASKS';
 export const TOGGLE_SELECT_A_TASK = 'TOGGLE_SELECT_A_TASK';
 export const EDIT_TASK_NAME = 'EDIT_TASK_NAME';
+export const COMPLETED_TASK = 'COMPLETED_TASK';
 
 export type TaskAction = {
   type: string,
@@ -86,6 +87,13 @@ export const toggleCompleted = (id: number)=>({
   }
 })
 
+export const completeTask = (id: number)=>({
+  type: COMPLETED_TASK,
+  payload: {
+    id,
+  }
+})
+
 export const togglePriority = (id: number)=>({
   type: TOGGLE_PRIORITY,
   payload: {
@@ -151,7 +159,7 @@ export const toggleActives = (ids: [number]) =>(dispatch: any)=>{
 };
 
 export const completeTasks = (ids: [number]) =>(dispatch: any)=>{
-  ids.forEach((id)=>dispatch(toggleCompleted(id)));
+  ids.forEach((id)=>dispatch(completeTask(id)));
 };
 
 export const priorityTasks = (ids: [number]) =>(dispatch: any)=>{

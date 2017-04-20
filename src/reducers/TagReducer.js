@@ -10,10 +10,6 @@ import {
   } from '../actions/TagActions';
 
 
-type initialStateType = {
-  tags: any,
-  nextTagId: number
-}
 
 const initialState: any = {
   tags: {
