@@ -20,7 +20,8 @@ export const inInboxCount = (state) => {
 };
 
 
-export const taskWithDate=(tasks)=>{
+export const taskWithDate=(state)=>{
+  const tasks = state.TaskReducer.tasks;
   const withDate = {};
   Object.entries(tasks).forEach( ([taskId, taskObject])=> {
     if(!taskObject.completed && taskObject.active &&  (taskObject.dueDate || taskObject.deferDate)){
@@ -29,4 +30,26 @@ export const taskWithDate=(tasks)=>{
   })
   return withDate;
 
+}
+
+
+export const taskInTrash = (state)=>{
+  const tasks ={} 
+  Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
+    if(!taskObject.active){ tasks[taskId] = taskObject }
+  });
+  return  tasks;
+
+}
+
+export const taskInTag = (tags, tagId, tasks)=>{
+  let tasksInTags = {};
+    Object.entries(tasks).forEach(([taskId, taskObject])=> 
+    {
+      if(tags[tagId].tasks.includes(taskId)){
+        tasksInTags[taskId] = taskObject;
+      }
+    }
+  );
+  return tasksInTags;
 }

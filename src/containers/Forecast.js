@@ -6,6 +6,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { taskWithDate  } from '../helperFunc/computeTask';
+import { browserHistory } from 'react-router'
 
 const actions = Object.assign({}, tagActions, taskActions);
 
@@ -23,7 +24,7 @@ class Forecast extends Component {
         title: taskObject.taskName,
         start: taskObject.deferDate||taskObject.dueDate,
         end: taskObject.dueDate||taskObject.deferDate,
-        priority: taskObject.priority
+        taskId
       })
     )
 
@@ -36,6 +37,8 @@ class Forecast extends Component {
       <BigCalendar
         events={this.computeEvens()}
         views={['month']}
+        popup
+        onSelectEvent={event => browserHistory.push(`/Tag#${event.taskId}`)}
       />
     )
   }
@@ -56,7 +59,7 @@ class Forecast extends Component {
 
 const mapStateToProps =  (state) => {
   const tags=state.TagReducer.tags;
-  const tasksWithDate = taskWithDate(state.TaskReducer.tasks);
+  const tasksWithDate = taskWithDate(state);
   return { tags, tasksWithDate }
 
 }

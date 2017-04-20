@@ -128,7 +128,7 @@ export default class detailSetup  extends Component {
   }
 
   updateSubmit(){
-    const disabled = this.state.taskName ==='' ? true: false;
+    const disabled = this.state.taskName ==='' || (this.state.tagId.length === 0) ? true: false;
     return(
       <RaisedButton  label="submit" fullWidth={true} disabled={disabled} onTouchTap={()=>this.props.handleDeiatilSubmit(this.state)}/>
     )
@@ -162,6 +162,20 @@ export default class detailSetup  extends Component {
   }
 
   render(){
+    if(this.props.hideSubmit){
+      return (
+        <Paper style={{'margin':'20px'}} zDepth={3} >
+          <div className='detailContainer'>
+            {this.updateTaskName()}
+            {this.updateTags()}
+            {this.updateDueDate()}
+            {this.updatePriority()}
+            {this.updateDeferDate()}
+            {this.updatePredictTime()}
+          </div>
+        </Paper>
+      )
+    }
     return (
       <Paper style={{'margin':'2px'}} zDepth={3}>
         <div className='detailContainer'>

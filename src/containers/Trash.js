@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { toggleActive, deleteTasks } from '../actions/TaskActions';
 import FloatActionButton from '../components/FloatActionButton';
 import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
+import { taskInTrash } from '../helperFunc/computeTask';
 
 
 class Trash extends Component {
@@ -39,10 +40,7 @@ class Trash extends Component {
 
 
 const mapStateToProps = (state) => {
-  const tasks ={} 
-  Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
-    if(!taskObject.active){ tasks[taskId] = taskObject }
-  });
+  const tasks = taskInTrash(state);
   return { tasks  }
 }
 
