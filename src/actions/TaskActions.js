@@ -58,6 +58,7 @@ export const editTaskName = (id: number, taskName: string)=>({
 
 });
 
+
 export const selectATask = (id: number)=>({
   type: SELECT_A_TASK,
   payload: {
@@ -133,6 +134,8 @@ export const setPredictTime = (id: number, predictTime: number)=>({
     predictTime
   }
 }: TaskAction);
+
+
 
 export const setActualTime = (id: number, actualTime: number)=>({
   type: SET_ACTUAL_TIME,

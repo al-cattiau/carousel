@@ -36,14 +36,10 @@ class TaskItem  extends Component {
     }
 
     if(predictTime){
-      setPredictTime(taskId, predictTime)
+      setPredictTime(taskId, predictTime);
     }
 
     toggleDetailMode();
-
-    
-
-    
 
   }
   handleLongPressDown(e, taskId, toggleEditMode, selectId){

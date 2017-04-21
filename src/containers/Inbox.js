@@ -87,7 +87,7 @@ class Inbox extends Component {
           toggleDetailMode={ (taskId)=>{if(taskId===this.state.detailList){this.setState({detailList:null})}else{ this.setState({detailList: taskId})}} }
           completeTask={ (taskId)=>this.props.completeTask(taskId) }
           toggleEditMode={ ()=>this.toggleEditMode()}
-          setPredictTime={()=>this.props.setPredictTime()}
+          setPredictTime={(taskId, predictTime)=>this.props.setPredictTime(taskId, predictTime)}
         />
       )
     }

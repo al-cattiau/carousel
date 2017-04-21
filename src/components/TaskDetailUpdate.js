@@ -9,29 +9,33 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import { disablePassDateAndDueDate, disablePassDateAndDeferDate } from '../helperFunc/datePickerHelper.js';
 
 
-export default class detailSetup  extends Component {
+export default class detailUpdate  extends Component {
+
+
+  editTaskName(taskName){
+    this.props.actions.editTaskName(this.props.taskId, taskName);
+  }
+  setTaskDueDate(dueDate){
+    this.props.actions.setTaskDueDate(this.props.taskId, dueDate);
+  }
+  setTaskDeferDate(deferDate){
+    this.props.actions.setTaskDeferDate(this.props.taskId, deferDate);
+  }
+  setPredictTime(value){
+    this.props.actions.setPredictTime(this.props.taskId, value);
+  }
+
+  togglePriority(){
+    this.props.actions.togglePriority(this.props.taskId);
+  }
   
-
-  constructor(props){
-    super(props);
-    const { taskName, priority } = this.props.taskObject;
-    this.state={ taskName, priority, tagId: [], dueDate:null, deferDate: null, predictTime: null }
-    this.menuItems = Object.entries(this.props.tags).map( ([tagId, tagObject])=>
-      <MenuItem key={tagId} value={tagId} primaryText={tagObject.tagName} />
-    );
-      
-  }
-
-
-  componentWillUnmount(){
-  }
-
+  
   updatePredictTime(){
     return(
       <div className='innercontainer'>
         <div className='text'>PredictTime</div>
         <div className='component'>
-          <RadioButtonGroup name="shipSpeed" valueSelected={this.state.predictTime} onChange={(e,value)=>this.setState({predictTime:value})}>
+          <RadioButtonGroup name="shipSpeed" valueSelected={this.props.taskObject.predictTime} onChange={(e,value)=>this.setPredictTime(value)}>
             <RadioButton
               value='0'
               label="short(< 20 minutes.)"        
@@ -56,7 +60,8 @@ export default class detailSetup  extends Component {
       <div className='innercontainer'>
         <div className='text'>Due date</div>
         <div className='component'>
-          <DatePicker hintText="same as deadline.(optional)" shouldDisableDate={(date)=>disablePassDateAndDeferDate(date, this.props.deferDate)} onChange={(e,date)=>this.setState({dueDate:date})} />
+          <DatePicker hintText='same as deadline.(optional)' shouldDisableDate={(date)=>disablePassDateAndDeferDate(date, this.props.taskObject.deferDate)} 
+            onChange={(e,date)=>this.setTaskDueDate(date)} />
         </div>
       </div>
     )
@@ -67,13 +72,15 @@ export default class detailSetup  extends Component {
       <div className='innercontainer'>
         <div className='text'>Defer date</div>
         <div className='component'>
-          <DatePicker hintText="date to start.(optional)" shouldDisableDate={(date)=>disablePassDateAndDueDate(date, this.props.dueDate)} onChange={(e,date)=>this.setState({deferDate:date})} />
+          <DatePicker hintText='date to start.(optional)' 
+          shouldDisableDate={(date)=>disablePassDateAndDueDate(date, this.props.taskObject.dueDate)} 
+          onChange={(e,date)=>this.setTaskDeferDate(date)} />
         </div>
       </div>  
     )
   }
 
-  updateTags(){
+  /*updateTags(){
     const checkboxes = Object.entries(this.props.tags).map( ([tagId, tagObject])=>{
       const addTag = [...this.state.tagId,tagId];
       const removeTag = this.state.tagId.filter((id)=> id!==tagId );
@@ -91,39 +98,28 @@ export default class detailSetup  extends Component {
         </div>
       </div>
     )
-  }
+  }*/
   updateTaskName(){
     return(
       <div className='innercontainer'>
         <div className='text'>Task Name</div>
         <div className='component'>
-          <TextField value={ this.state.taskName}  hintText='any atom in your mind.' onChange={(e, text)=>this.setState({taskName:text})}
+          <TextField value={ this.props.taskObject.taskName}  hintText='any atom in your mind.' onChange={(e, text)=>this.editTaskName(text)}
             />
         </div>
       </div>
     )
   }
 
-  updateSubmit(){
-    const disabled = this.state.taskName ==='' || (this.state.tagId.length === 0) ? true: false;
-    return(
-      <RaisedButton  label="submit" fullWidth={true} disabled={disabled} onTouchTap={()=>this.props.handleDeiatilSubmit(this.state)}/>
-    )
-  }
-
-
-  
-
-
   updatePriority(){
     return(
       <div className='innercontainer'>
         <div className='text'>Priority</div>
         <div className='component'>
-          {this.state.priority?
-            <RaisedButton label="high" secondary={true} fullWidth={true} onTouchTap={()=>this.setState({priority:false})}/>:
-            <RaisedButton label="normal" primary={true} fullWidth={true} onTouchTap={()=>this.setState({priority:true})}/>
-            }      
+          <RaisedButton 
+          label={this.props.taskObject.priority?'high':'normal'} 
+          secondary={this.props.taskObject.priority?true:false} 
+          fullWidth={true} onTouchTap={()=>this.togglePriority()  }/>
         </div>
       </div>
     )
@@ -131,16 +127,14 @@ export default class detailSetup  extends Component {
 
   render(){
     return (
-      <Paper style={this.props.hideSubmit?{'margin':'20px'}:{'margin':'5px'}} zDepth={3} >
+      <Paper style={{'margin':'20px'}} zDepth={3} >
         <div className='detailContainer'>
           {this.updateTaskName()}
-          {this.updateTags()}
           {this.updateDueDate()}
           {this.updatePriority()}
           {this.updateDeferDate()}
           {this.updatePredictTime()}
         </div>
-        {this.props.hideSubmit?null :this.updateSubmit()}
     </Paper>
     )
   }

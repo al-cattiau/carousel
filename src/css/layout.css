@@ -1,17 +1,23 @@
 .forecastPaper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center ;
+  justify-content:flex-start ;
   margin-top: 1px;
   align-items: flex-start;
-  height: 500px;
+  
   
 }
 
 .forecastContent{
   height: 400px;
   width: 300px;
+  margin: 10px;
 
+}
+
+.forecastTaskList {
+  width: 300px;
+  margin: 10px;
 }
 
 .detailContainer {

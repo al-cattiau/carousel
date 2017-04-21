@@ -17,42 +17,7 @@ html, body {
   
 }
 
-.fade-enter{
-    background-color: #E0E0E0;
+a {
+  text-decoration: none;
+  
 }
-
-.fade-enter-active {
-    background-color: white;
-    -webkit-transition:  .3s ease-in all;
-    -moz-transition:  .3s ease-in all;
-    transition:  .3s ease-in all;
-}
-
-
-.fade-leave {
-    position: relative;
-    left: 0px;
-    opacity: 1
-}
-
-.fade-leave-active {
-    position: relative;
-    left: -30px;
-    opacity: 0;
-    -webkit-transition:  .3s ease-out all;
-    -moz-transition:  .3s ease-out all;
-    transition:  .3s ease-out all;
-}
-
-.FAB {
-    animation: shot .1s ease-in-out
-}
-@keyframes shot {
-  0%{
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-  }
-
-}
-

@@ -2,11 +2,12 @@ import { connect } from 'react-redux';
 import React,{ Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import './App.css';
 import { inInboxCount } from '../helperFunc/computeTask';
 import { wrap } from 'react-bounds';
 import Leftlist from '../components/LeftList';
 import AppBar from 'material-ui/AppBar';
+import '../css/layout.css';
+import '../css/animation.css';
 
 injectTapEventPlugin();
 
@@ -27,7 +28,6 @@ class App extends Component{
       title = 'Carousel';
     }
     return(
-      
       <MuiThemeProvider>
         <div> 
           <AppBar title={title} style={{'position':'fixed'}} onTouchTap={()=>this.setState({openList:!this.state.openList})}/>
