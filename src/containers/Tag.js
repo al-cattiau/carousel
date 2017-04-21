@@ -19,7 +19,12 @@ class Tags extends Component {
         <a href={`#${taskId}`} key={taskId} >
           <TaskDetailUpdate tags={this.props.tags} 
             taskId={taskId} taskObject={taskObject}  
-            actions={actions}
+            setTaskDeferDate={(deferDate)=>this.props.setTaskDeferDate(taskId, deferDate)}
+            togglePriority={()=>this.props.togglePriority(taskId)}
+            editTaskName={(taskName)=>this.props.editTaskName(taskId, taskName)}
+            setPredictTime={(time)=>this.props.setPredictTime(taskId, time)}
+            setTaskDueDate={(date)=>this.props.setTaskDueDate(taskId, date)}
+            toggleActive={()=>this.props.toggleActive(taskId)}
           />
         </a>
       ));

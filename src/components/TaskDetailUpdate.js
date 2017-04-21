@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox';
-import MenuItem from 'material-ui/MenuItem';
+// import Checkbox from 'material-ui/Checkbox';
+// import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
@@ -11,31 +11,12 @@ import { disablePassDateAndDueDate, disablePassDateAndDeferDate } from '../helpe
 
 export default class detailUpdate  extends Component {
 
-
-  editTaskName(taskName){
-    this.props.actions.editTaskName(this.props.taskId, taskName);
-  }
-  setTaskDueDate(dueDate){
-    this.props.actions.setTaskDueDate(this.props.taskId, dueDate);
-  }
-  setTaskDeferDate(deferDate){
-    this.props.actions.setTaskDeferDate(this.props.taskId, deferDate);
-  }
-  setPredictTime(value){
-    this.props.actions.setPredictTime(this.props.taskId, value);
-  }
-
-  togglePriority(){
-    this.props.actions.togglePriority(this.props.taskId);
-  }
-  
-  
   updatePredictTime(){
     return(
       <div className='innercontainer'>
         <div className='text'>PredictTime</div>
         <div className='component'>
-          <RadioButtonGroup name="shipSpeed" valueSelected={this.props.taskObject.predictTime} onChange={(e,value)=>this.setPredictTime(value)}>
+          <RadioButtonGroup name="shipSpeed" valueSelected={this.props.taskObject.predictTime} onChange={(e,value)=>this.props.setPredictTime(value)}>
             <RadioButton
               value='0'
               label="short(< 20 minutes.)"        
@@ -60,8 +41,10 @@ export default class detailUpdate  extends Component {
       <div className='innercontainer'>
         <div className='text'>Due date</div>
         <div className='component'>
-          <DatePicker hintText='same as deadline.(optional)' shouldDisableDate={(date)=>disablePassDateAndDeferDate(date, this.props.taskObject.deferDate)} 
-            onChange={(e,date)=>this.setTaskDueDate(date)} />
+          <DatePicker hintText='same as deadline.(optional)' 
+          defaultDate={this.props.taskObject.dueDate}
+          shouldDisableDate={(date)=>disablePassDateAndDeferDate(date, this.props.taskObject.deferDate)} 
+            onChange={(e,date)=>this.props.setTaskDueDate(date)} />
         </div>
       </div>
     )
@@ -73,8 +56,9 @@ export default class detailUpdate  extends Component {
         <div className='text'>Defer date</div>
         <div className='component'>
           <DatePicker hintText='date to start.(optional)' 
+          defaultDate={this.props.taskObject.deferDate}
           shouldDisableDate={(date)=>disablePassDateAndDueDate(date, this.props.taskObject.dueDate)} 
-          onChange={(e,date)=>this.setTaskDeferDate(date)} />
+          onChange={(e,date)=>this.props.setTaskDeferDate(date)} />
         </div>
       </div>  
     )
@@ -104,10 +88,19 @@ export default class detailUpdate  extends Component {
       <div className='innercontainer'>
         <div className='text'>Task Name</div>
         <div className='component'>
-          <TextField value={ this.props.taskObject.taskName}  hintText='any atom in your mind.' onChange={(e, text)=>this.editTaskName(text)}
+          <TextField value={ this.props.taskObject.taskName}  hintText='any atom in your mind.' onChange={(e, text)=>this.props.editTaskName(text)}
             />
         </div>
       </div>
+    )
+  }
+
+  updateDeleteButton(){
+    return(
+      <RaisedButton  label='delete' secondary={true} 
+        onTouchTap={()=>this.props.toggleActive()}
+      />
+            
     )
   }
 
@@ -119,7 +112,8 @@ export default class detailUpdate  extends Component {
           <RaisedButton 
           label={this.props.taskObject.priority?'high':'normal'} 
           secondary={this.props.taskObject.priority?true:false} 
-          fullWidth={true} onTouchTap={()=>this.togglePriority()  }/>
+          primary={this.props.taskObject.priority?false:true} 
+          fullWidth={true} onTouchTap={()=>this.props.togglePriority()  }/>
         </div>
       </div>
     )
@@ -134,6 +128,7 @@ export default class detailUpdate  extends Component {
           {this.updatePriority()}
           {this.updateDeferDate()}
           {this.updatePredictTime()}
+          {this.updateDeleteButton()}
         </div>
     </Paper>
     )

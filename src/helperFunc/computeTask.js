@@ -32,7 +32,6 @@ export const taskWithDate=(state)=>{
 
 }
 
-
 export const taskInTrash = (state)=>{
   const tasks ={} 
   Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
@@ -46,7 +45,7 @@ export const taskInTag = (tags, tagId, tasks)=>{
   let tasksInTags = {};
     Object.entries(tasks).forEach(([taskId, taskObject])=> 
     {
-      if(tags[tagId].tasks.includes(taskId)){
+      if(tags[tagId].tasks.includes(taskId)&&taskObject.active){
         tasksInTags[taskId] = taskObject;
       }
     }

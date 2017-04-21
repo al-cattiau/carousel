@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LineChart, Line, XAxis, YAxis } from 'recharts';
+// import { LineChart, Line, XAxis, YAxis } from 'recharts';
 import DeleteForever from 'material-ui/svg-icons/action/search';
 import FloatActionButton from '../components/FloatActionButton';
 
@@ -8,7 +8,7 @@ class Archive extends Component{
     return (
       <div>
         <p>Score: priority double, time useage, short half, long double.</p>
-        <FloatActionButton Icon={<DeleteForever/>}/>
+        <FloatActionButton Icon={<DeleteForever/>} onTouchTap={()=>console.log('s')}/>
        </div>
     )
   }

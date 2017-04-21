@@ -18,8 +18,8 @@ class TrashTaskPaper extends Component {
         <p>{this.props.taskObject.taskName}</p>
         <p>Completed: {this.props.taskObject.completed?'Yes':'No yet'}</p>
         <p>Priority: {this.props.taskObject.priority?'High':'Normal'}</p>
-        <p>Due Date: {this.props.taskObject.dueDate||'Unknown'}</p>
-        <p>Defer Date: {this.props.taskObject.deferDate||'Unknown'}</p>
+        <p>Due Date: {this.props.taskObject.dueDate.toDateString() ||'Unknown'}</p>
+        <p>Defer Date: {this.props.taskObject.deferDate.toDateString() ||'Unknown'}</p>
         <div style={{'position':'absolute','bottom':'0','width':'100%'}}>
           <RaisedButton icon={<Undo/>}  label=' Put Back' fullWidth={true} onTouchTap={this.props.toggleActive}/>
         </div>

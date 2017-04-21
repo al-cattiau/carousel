@@ -56,7 +56,7 @@ export default class detailSetup  extends Component {
       <div className='innercontainer'>
         <div className='text'>Due date</div>
         <div className='component'>
-          <DatePicker hintText="same as deadline.(optional)" shouldDisableDate={(date)=>disablePassDateAndDeferDate(date, this.props.deferDate)} onChange={(e,date)=>this.setState({dueDate:date})} />
+          <DatePicker hintText="same as deadline.(optional)" shouldDisableDate={(date)=>disablePassDateAndDeferDate(date, this.state.deferDate)} onChange={(e,date)=>this.setState({dueDate:date})} />
         </div>
       </div>
     )
@@ -67,7 +67,7 @@ export default class detailSetup  extends Component {
       <div className='innercontainer'>
         <div className='text'>Defer date</div>
         <div className='component'>
-          <DatePicker hintText="date to start.(optional)" shouldDisableDate={(date)=>disablePassDateAndDueDate(date, this.props.dueDate)} onChange={(e,date)=>this.setState({deferDate:date})} />
+          <DatePicker hintText="date to start.(optional)" shouldDisableDate={(date)=>disablePassDateAndDueDate(date, this.state.dueDate)} onChange={(e,date)=>this.setState({deferDate:date})} />
         </div>
       </div>  
     )
@@ -107,13 +107,9 @@ export default class detailSetup  extends Component {
   updateSubmit(){
     const disabled = this.state.taskName ==='' || (this.state.tagId.length === 0) ? true: false;
     return(
-      <RaisedButton  label="submit" fullWidth={true} disabled={disabled} onTouchTap={()=>this.props.handleDeiatilSubmit(this.state)}/>
+      <RaisedButton  label='submit' fullWidth={true} disabled={disabled} onTouchTap={()=>this.props.handleDeiatilSubmit(this.state)}/>
     )
   }
-
-
-  
-
 
   updatePriority(){
     return(
