@@ -69,8 +69,10 @@ class Tags extends Component {
     return (
       <div>
         {this.renderTag()}
+        <div style={{'marginTop':20}}>
+          {this.props.children}
+        </div>
         {this.renderFAB()}
-        {this.props.children}
       </div>
     )
   }

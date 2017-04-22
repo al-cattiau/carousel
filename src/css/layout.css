@@ -97,3 +97,15 @@
 
 }
 
+
+.addTagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start ;
+
+}
+
+
+.addTagComponent {
+  width: 300px;
+}

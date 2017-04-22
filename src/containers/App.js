@@ -22,8 +22,9 @@ class App extends Component{
   }
   state={openList:false}
   render(){
+    
     const hightLight = this.props.hightLight.split('/')[1];
-    let title = hightLight.substr(1,hightLight.length-1);
+    let title = hightLight;
     if (title === ''){
       title = 'Carousel';
     }
