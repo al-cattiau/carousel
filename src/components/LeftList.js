@@ -24,7 +24,7 @@ class Leftlist extends Component{
   
 
   renderList(hightLight, count){
-    this.hightLightIndex = this.items.findIndex((item)=> `/${item.text}` === hightLight  );
+    this.hightLightIndex = this.items.findIndex((item)=> item.text === hightLight  );
     return this.items.map((item, index) => (<ListBadgeitem  badgeCount={count} key={item.text} item={item} isHightlight={index===this.hightLightIndex} index={index} close={()=>this.props.close()} />) )
   }
   render(){

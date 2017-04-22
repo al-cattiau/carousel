@@ -7,6 +7,7 @@ import Tag from './containers/Tag';
 import Forecast from './containers/Forecast';
 import Trash from './containers/Trash';
 import Archive from './containers/Archive';
+import AddTag from './components/AddTag';
 
 
 export default (
@@ -14,7 +15,9 @@ export default (
     <IndexRoute component={Wizard}/>
     <Route path='Inbox' component={Inbox} />
     <Route path='Archive' component={Archive} />
-    <Route path='Tag' component={Tag} />
+    <Route path='Tag' component={Tag} >
+      <Route path='add' component={AddTag}/>
+    </Route>
     <Route path='Forecast' component={Forecast} />
     <Route path='Trash' component={Trash} />
   </Route>

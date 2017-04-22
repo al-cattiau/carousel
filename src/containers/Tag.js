@@ -5,6 +5,9 @@ import * as tagActions from '../actions/TagActions';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import { taskInTag  } from '../helperFunc/computeTask';
 import TaskDetailUpdate from '../components/TaskDetailUpdate';
+import FloatActionButton from '../components/FloatActionButton';
+import Add from 'material-ui/svg-icons/content/add';
+import { browserHistory } from 'react-router';
 
 
 const actions = Object.assign({}, tagActions, taskActions);
@@ -46,10 +49,28 @@ class Tags extends Component {
     )
   }
 
+  renderFAB(){
+    let clickFab, rotateStyle ;
+    if(this.props.pathname==='/Tag/add'){
+      clickFab = ()=>browserHistory.push('/Tag');
+      rotateStyle={'transform':'rotate(-45deg)'};
+    }else{
+      clickFab = ()=>browserHistory.push('/Tag/add');
+      rotateStyle={};
+    }
+    return (
+      <FloatActionButton Icon={<Add style={rotateStyle}/>} clickFab={()=>clickFab()}/>
+
+    )
+
+  }
+
   render(){
     return (
       <div>
         {this.renderTag()}
+        {this.renderFAB()}
+        {this.props.children}
       </div>
     )
   }
@@ -60,7 +81,8 @@ class Tags extends Component {
 const mapStateToProps =  (state) => {
   const tags=state.TagReducer.tags;
   const tasks = state.TaskReducer.tasks;
-  return { tags, tasks }
+  const pathname= state.routing.locationBeforeTransitions.pathname;
+  return { tags, tasks, pathname }
 
 }
 

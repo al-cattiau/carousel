@@ -8,7 +8,7 @@ class Archive extends Component{
     return (
       <div>
         <p>Score: priority double, time useage, short half, long double.</p>
-        <FloatActionButton Icon={<DeleteForever/>} onTouchTap={()=>console.log('s')}/>
+        <FloatActionButton Icon={<DeleteForever/>} clickFab={()=>console.log('s')}/>
        </div>
     )
   }
