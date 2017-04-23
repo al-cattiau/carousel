@@ -86,3 +86,31 @@ export const taskNameAutoComplete = (state) =>{
   return taskNameArray;
 
 }
+
+
+export const taskToFilter = (filterText, tasks) => {
+  const filterdTasks = {};
+  const  caseInsensitiveFilterText = filterText.toLowerCase();
+  Object.entries(tasks).forEach( ([taskId, taskObject]) =>{    
+    if (taskObject.taskName.toLowerCase().includes(caseInsensitiveFilterText)){
+      filterdTasks[taskId] = taskObject;
+    }
+
+  })
+  return filterdTasks;
+
+}
+
+
+export const taskToSearch = (filterText, tasks) => {
+  const filterdTasks = {};
+  const  caseInsensitiveFilterText = filterText.toLowerCase();
+  Object.entries(tasks).forEach( ([taskId, taskObject]) =>{    
+    if (taskObject.taskName.toLowerCase()===caseInsensitiveFilterText){
+      filterdTasks[taskId] = taskObject;
+    }
+
+  })
+  return filterdTasks;
+
+}
