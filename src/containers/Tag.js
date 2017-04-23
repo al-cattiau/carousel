@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as taskActions from '../actions/TaskActions';
 import * as tagActions from '../actions/TagActions';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardHeader, CardActions, CardText} from 'material-ui/Card';
 import { taskInTag  } from '../helperFunc/computeTask';
 import TaskDetailUpdate from '../components/TaskDetailUpdate';
 import FloatActionButton from '../components/FloatActionButton';
 import Add from 'material-ui/svg-icons/content/add';
 import { browserHistory } from 'react-router';
+import FlatButton from 'material-ui/FlatButton';
 
 
 const actions = Object.assign({}, tagActions, taskActions);
@@ -19,7 +20,7 @@ class Tags extends Component {
     return Object.entries(this.props.tags).map( ([tagId, tagObject])=>{
       const tasksInTags = taskInTag(this.props.tags, tagId, this.props.tasks);
       const tasksItems = Object.entries(tasksInTags).map(([taskId, taskObject])=>(
-        <a href={`#${taskId}`} key={taskId} >
+        <div id={taskId} key={taskId} >
           <TaskDetailUpdate tags={this.props.tags} 
             taskId={taskId} taskObject={taskObject}  
             setTaskDeferDate={(deferDate)=>this.props.setTaskDeferDate(taskId, deferDate)}
@@ -28,11 +29,14 @@ class Tags extends Component {
             setPredictTime={(time)=>this.props.setPredictTime(taskId, time)}
             setTaskDueDate={(date)=>this.props.setTaskDueDate(taskId, date)}
             toggleActive={()=>this.props.toggleActive(taskId)}
+            associateTaskWithTag={(id, taskId)=>this.props.associateTaskWithTag(id, taskId)}
+            de_associateTaskWithTag={(id, taskId)=>this.props.de_associateTaskWithTag(id, taskId)}
+            toggleCompleted={()=>this.props.toggleCompleted(taskId)}
           />
-        </a>
+        </div>
       ));
       return(
-        <Card key={tagId} style={{'marginTop': 20}} initiallyExpanded={true}>
+        <Card style={{'marginTop': 20}} key={tagId} initiallyExpanded={true}>
           <CardHeader
             title={tagObject.tagName}
             actAsExpander={true}
@@ -40,9 +44,12 @@ class Tags extends Component {
             titleColor={tagObject.color}
             titleStyle={{'fontSize':30,'fontWeight':'lighter'}}
           />
-          <CardText expandable={true}>
+          <CardText style={{'padding':2}} expandable={true}>
             {tasksItems}
           </CardText>
+          <CardActions >
+            <FlatButton label='delete' secondary={true} onTouchTap={()=>this.props.deleteTag(tagId)}/>
+          </CardActions >
         </Card>
         )
       }
@@ -60,23 +67,25 @@ class Tags extends Component {
     }
     return (
       <FloatActionButton Icon={<Add style={rotateStyle}/>} clickFab={()=>clickFab()}/>
-
     )
-
   }
-
   render(){
-    return (
-      <div>
-        {this.renderTag()}
+    if(this.props.children){
+      return (     
         <div style={{'marginTop':20}}>
           {this.props.children}
+          {this.renderFAB()}
         </div>
-        {this.renderFAB()}
-      </div>
-    )
+      )
+    }else{
+      return(
+        <div>
+          {this.renderTag()}
+          {this.renderFAB()}
+        </div>
+      )
+    }
   }
-
 }
 
 

@@ -41,14 +41,48 @@ export const taskInTrash = (state)=>{
 
 }
 
+export const taskInArchive = (state)=>{
+  const tasks ={} 
+  Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
+    if(taskObject.completed){ tasks[taskId] = taskObject }
+  });
+  return  tasks;
+
+}
+
+export const IncompleteTask = (state)=>{
+  const tasks ={} 
+  Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
+    if(!taskObject.completed){ tasks[taskId] = taskObject }
+  });
+  return  tasks;
+
+}
+
 export const taskInTag = (tags, tagId, tasks)=>{
   let tasksInTags = {};
     Object.entries(tasks).forEach(([taskId, taskObject])=> 
     {
+      if(taskObject.completed){
+        return;
+      }
       if(tags[tagId].tasks.includes(taskId)&&taskObject.active){
         tasksInTags[taskId] = taskObject;
       }
     }
   );
   return tasksInTags;
+}
+
+export const taskNameAutoComplete = (state) =>{
+
+  const taskNameArray = [];
+  Object.entries(state.TaskReducer.tasks).forEach( ([taskId, taskObject]) =>{    
+    if(!taskObject.completed){
+      return;
+    }
+    taskNameArray.push(taskObject.taskName);
+  });
+  return taskNameArray;
+
 }

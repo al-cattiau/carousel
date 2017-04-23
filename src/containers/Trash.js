@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import TrashTaskPaper from '../components/TrashTaskPaper';
+import TrashTaskPaper from '../components/TaskPaper';
 import { connect } from 'react-redux';
 import { toggleActive, deleteTasks } from '../actions/TaskActions';
 import FloatActionButton from '../components/FloatActionButton';
 import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
 import { taskInTrash } from '../helperFunc/computeTask';
+import Undo from 'material-ui/svg-icons/content/reply';
 
 
 class Trash extends Component {
   renderTaskPaper(){
     return Object.entries(this.props.tasks).map( ([taskId, taskObject])=> 
       <TrashTaskPaper 
-        toggleActive={()=>this.props.toggleActive(taskId)} 
+        buttonClick={()=>this.props.toggleActive(taskId)} 
         taskObject={taskObject} 
+        buttonIcon={<Undo />}
+        buttonLabel={' Put Back'}
         key={taskId}
       />
     )

@@ -49,6 +49,9 @@ class Forecast extends Component {
   renderTaskList(){
     let taskArray = [];
     Object.entries(this.props.tasksWithDate).forEach(([taskId, taskObject])=>{
+      if(!taskObject.dueDate){
+        return;
+      }
       if(taskObject.dueDate.getMonth()===(new Date()).getMonth()){
         let taskObjectWithId = Object.assign({}, taskObject) ;
         taskObjectWithId.id = taskId;

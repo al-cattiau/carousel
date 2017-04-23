@@ -5,7 +5,9 @@ import {
   ADD_TAG,
   EDIT_TAG_NAME, 
   EDIT_TAG_COLOR, 
-  ASSOCIATE_TASK_WITH_Tag,
+  DELETE_TAG,
+  ASSOCIATE_TASK_WITH_TAG,
+  DE_ASSOCIATE_TASK_WITH_TAG,
   DELETE_TASK_IN_TAG,
   } from '../actions/TagActions';
 
@@ -46,6 +48,15 @@ const TagReducer = (state: any=initialState, action: any) =>{
       });
     }
 
+    case DELETE_TAG: {
+      const { id } = payload;
+      return Object.assign({}, {
+          ...state,
+          tags: _.omit(state.tags, id),
+          nextTagId: state.nextTagId
+      });
+    }
+
     case EDIT_TAG_NAME: {
       const { id, tagName } = payload;
       return Object.assign({}, {
@@ -74,7 +85,7 @@ const TagReducer = (state: any=initialState, action: any) =>{
       });
     }
 
-    case ASSOCIATE_TASK_WITH_Tag: {
+    case ASSOCIATE_TASK_WITH_TAG: {
       const { id, taskId } = payload;
       return Object.assign({}, {
         ...state,
@@ -91,6 +102,22 @@ const TagReducer = (state: any=initialState, action: any) =>{
         }
       });
     }
+
+    case DE_ASSOCIATE_TASK_WITH_TAG: {
+      const { id, taskId } = payload;
+      return Object.assign({}, {
+        ...state,
+        tags: {
+          ...state.tags,
+          [id]: {
+            ...state.tags[id],
+            tasks:
+              state.tags[id].tasks.filter( (task)=>task!==taskId) 
+          }
+        }
+      });
+    }
+
 
     case DELETE_TASK_IN_TAG: {
       const { id, taskId } = payload;

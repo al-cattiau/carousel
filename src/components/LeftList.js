@@ -16,7 +16,7 @@ class Leftlist extends Component{
       {icon:<ContentInbox />,text:'Inbox', count:props.inboxCount},
       {icon:<Archive  />,text:'Archive', count:props.archiveCount},
       {icon:<Forecast  />,text:'Forecast', count:props.forecastCount},
-      {icon:<Tag  />,text:'Tag', count:props.tagCount},
+      {icon:<Tag  />,text:'Tag', count:props.tagCount },
       {icon:<Delete  />,text:'Trash', count:props.trashCount},
     ];
     
@@ -24,8 +24,11 @@ class Leftlist extends Component{
   
 
   renderList(hightLight, count){
+    this.items[3].tags = this.props.tags;
     this.hightLightIndex = this.items.findIndex((item)=> item.text === hightLight  );
-    return this.items.map((item, index) => (<ListBadgeitem  badgeCount={count} key={item.text} item={item} isHightlight={index===this.hightLightIndex} index={index} close={()=>this.props.close()} />) )
+    return this.items.map((item, index) =>
+     (<ListBadgeitem  badgeCount={count}  key={item.text} item={item} isHightlight={index===this.hightLightIndex} index={index} close={()=>this.props.close()} />) 
+     )
   }
   render(){
     return(

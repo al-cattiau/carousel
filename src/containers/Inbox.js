@@ -111,7 +111,7 @@ class Inbox extends Component {
       )
     }else{
       this.tagsButton = Object.entries(this.props.tags).map(
-       ([tagId, tag]) => ({ Icon: <Tag/>, callback: ()=>this.setState({editMode:false}) , backgroundColor: tag.color })
+       ([tagId, tag]) => ({ Icon: <Tag/>, callback: ()=>this.props.associateTasksWithTag(tagId, this.props.selectedTaskId) , backgroundColor: tag.color })
       );
       return (
         <FloatActionButtonList buttons={[...this.buttonsInEditMode, ...this.tagsButton]}/>

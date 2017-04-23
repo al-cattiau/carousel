@@ -11,6 +11,17 @@ import '../css/animation.css';
 
 injectTapEventPlugin();
 
+
+
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+const muiTheme = getMuiTheme({
+  
+});
+
+
+
+
 class App extends Component{
 
   static bounds(){
@@ -29,10 +40,10 @@ class App extends Component{
       title = 'Carousel';
     }
     return(
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <div> 
           <AppBar title={title} style={{'position':'fixed'}} onTouchTap={()=>this.setState({openList:!this.state.openList})}/>
-          <Leftlist inboxCount={this.props.inboxCount} hightLight={hightLight} isLandscape={this.props.isBound('landscape')}  openList={this.state.openList} close={()=>this.setState({openList:false})} />
+          <Leftlist tags={this.props.tags} inboxCount={this.props.inboxCount} hightLight={hightLight} isLandscape={this.props.isBound('landscape')}  openList={this.state.openList} close={()=>this.setState({openList:false})} />
           <div className="appContent">
             {this.props.children}
           </div>

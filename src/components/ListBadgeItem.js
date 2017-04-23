@@ -15,23 +15,41 @@ const listItemStyle = {
 
 
 export default (props) => {
-  const { item, isHightlight, index } = props;
-  let { text } = item;
+  const { item, isHightlight, index,  } = props;
+  let { text, tags } = item;
   const badgeCount = props.badgeCount < 99 ? props.badgeCount : '∞';
   const ltbListItemStyle = isHightlight? 
     Object.assign({'backgroundColor':'#E0E0E0'},listItemStyle)
      : listItemStyle
   
   if (index !== 0 || badgeCount===0){
-    return (
-      <ListItem
-          containerElement={<Link to={`/${item.text}` }/>}            
-          onTouchTap={()=>props.close()}
-          leftIcon={item.icon}
-          style={ltbListItemStyle}
-          primaryText={text}
-        />
+    if(tags){
+      const tagsItem = Object.entries(tags).map( ([tagId, tagObject]) =>
+        <ListItem key={tagId} hoverColor={tagObject.color}  primaryText={tagObject.tagName}  containerElement={<Link to={'/Tag' }/>} /> 
+      )
+      return (
+        <ListItem
+            containerElement={<Link to={`/${item.text}` }/>}            
+            onTouchTap={()=>props.close()}
+            leftIcon={item.icon}
+            style={ltbListItemStyle}
+            primaryText={text}
+            nestedItems={tagsItem}
+          />
     )
+      
+    }else{
+      return (
+        <ListItem
+            containerElement={<Link to={`/${item.text}` }/>}            
+            onTouchTap={()=>props.close()}
+            leftIcon={item.icon}
+            style={ltbListItemStyle}
+            primaryText={text}
+          />
+    )
+    }
+    
   }
     return(
       <Badge 

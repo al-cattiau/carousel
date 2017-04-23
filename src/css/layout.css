@@ -1,3 +1,28 @@
+*{
+    box-sizing: border-box;
+}
+
+html, body {
+  height:100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif
+
+}
+
+#root {
+  height:100%;
+  margin: 0;
+  padding: 0;
+  
+}
+
+a {
+  text-decoration: none;
+  
+}
+
+
 .forecastPaper {
   display: flex;
   flex-wrap: wrap;
@@ -32,14 +57,14 @@
 
 .text {
   /*background-color: lightcyan;*/
-  width: 120px;
+  width: 95px;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #2196F3;
-
-  
+  font-weight: lighter;
+  align-self: center;
 
 }
 .appContent {
@@ -73,7 +98,7 @@
 
 
 .component {
-  width: 256px;
+  width: 180px;
 }
 
 .innercontainer {
@@ -85,6 +110,15 @@
 
 .fullwidth {
   width: 100%
+}
+
+.archiveContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start ;
+  align-items: center;
+  
+
 }
 
 
@@ -101,11 +135,19 @@
 .addTagContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content:flex-start ;
+  justify-content: space-around ;
 
 }
 
-
 .addTagComponent {
   width: 300px;
+}
+
+
+.actionContainer {
+  width: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
 }

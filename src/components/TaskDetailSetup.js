@@ -1,35 +1,28 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
-import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import { disablePassDateAndDueDate, disablePassDateAndDeferDate } from '../helperFunc/datePickerHelper.js';
-
+const textFieldStyle = {
+  width: 180
+};
 
 export default class detailSetup  extends Component {
-  
-
   constructor(props){
     super(props);
     const { taskName, priority } = this.props.taskObject;
     this.state={ taskName, priority, tagId: [], dueDate:null, deferDate: null, predictTime: null }
-    this.menuItems = Object.entries(this.props.tags).map( ([tagId, tagObject])=>
-      <MenuItem key={tagId} value={tagId} primaryText={tagObject.tagName} />
-    );
       
   }
 
 
-  componentWillUnmount(){
-  }
-
   updatePredictTime(){
     return(
       <div className='innercontainer'>
-        <div className='text'>PredictTime</div>
+        <div className='text'>predict time</div>
         <div className='component'>
           <RadioButtonGroup name="shipSpeed" valueSelected={this.state.predictTime} onChange={(e,value)=>this.setState({predictTime:value})}>
             <RadioButton
@@ -54,9 +47,9 @@ export default class detailSetup  extends Component {
   updateDueDate(){
     return(
       <div className='innercontainer'>
-        <div className='text'>Due date</div>
+        <div className='text'>due date</div>
         <div className='component'>
-          <DatePicker hintText="same as deadline.(optional)" shouldDisableDate={(date)=>disablePassDateAndDeferDate(date, this.state.deferDate)} onChange={(e,date)=>this.setState({dueDate:date})} />
+          <DatePicker textFieldStyle={textFieldStyle} hintText='same as deadline.' shouldDisableDate={(date)=>disablePassDateAndDeferDate(date, this.state.deferDate)} onChange={(e,date)=>this.setState({dueDate:date})} />
         </div>
       </div>
     )
@@ -65,9 +58,9 @@ export default class detailSetup  extends Component {
   updateDeferDate(){
     return(
       <div className='innercontainer'>
-        <div className='text'>Defer date</div>
+        <div className='text'>defer date</div>
         <div className='component'>
-          <DatePicker hintText="date to start.(optional)" shouldDisableDate={(date)=>disablePassDateAndDueDate(date, this.state.dueDate)} onChange={(e,date)=>this.setState({deferDate:date})} />
+          <DatePicker textFieldStyle={textFieldStyle} hintText='date to start.' shouldDisableDate={(date)=>disablePassDateAndDueDate(date, this.state.dueDate)} onChange={(e,date)=>this.setState({deferDate:date})} />
         </div>
       </div>  
     )
@@ -85,9 +78,10 @@ export default class detailSetup  extends Component {
     });
     return(
       <div className='innercontainer'>
-        <div className='text'>Tags</div>
+        <div className='text'>tags</div>
         <div className="component">
-          {checkboxes}
+
+          {checkboxes.length <1? 'Please add the Tag first.':checkboxes }
         </div>
       </div>
     )
@@ -95,9 +89,9 @@ export default class detailSetup  extends Component {
   updateTaskName(){
     return(
       <div className='innercontainer'>
-        <div className='text'>Task Name</div>
+        <div className='text'>task name</div>
         <div className='component'>
-          <TextField value={ this.state.taskName}  hintText='any atom in your mind.' onChange={(e, text)=>this.setState({taskName:text})}
+          <TextField style={textFieldStyle} value={ this.state.taskName}  hintText='any atom in your mind.' onChange={(e, text)=>this.setState({taskName:text})}
             />
         </div>
       </div>
@@ -127,7 +121,7 @@ export default class detailSetup  extends Component {
 
   render(){
     return (
-      <Paper style={this.props.hideSubmit?{'margin':'20px'}:{'margin':'5px'}} zDepth={3} >
+      <Paper style={{'margin':'5px'}} zDepth={3} >
         <div className='detailContainer'>
           {this.updateTaskName()}
           {this.updateTags()}
@@ -136,7 +130,7 @@ export default class detailSetup  extends Component {
           {this.updateDeferDate()}
           {this.updatePredictTime()}
         </div>
-        {this.props.hideSubmit?null :this.updateSubmit()}
+        {this.updateSubmit()}
     </Paper>
     )
   }

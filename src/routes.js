@@ -7,7 +7,7 @@ import Tag from './containers/Tag';
 import Forecast from './containers/Forecast';
 import Trash from './containers/Trash';
 import Archive from './containers/Archive';
-import AddTag from './components/AddTag';
+import AddTag from './containers/AddTag';
 
 
 export default (
