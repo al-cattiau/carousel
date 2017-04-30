@@ -36,21 +36,23 @@ class Tags extends Component {
         </div>
       ));
       return(
-        <Card style={{'marginTop': 20}} key={tagId} initiallyExpanded={true}>
-          <CardHeader
-            title={tagObject.tagName}
-            actAsExpander={true}
-            showExpandableButton={true}
-            titleColor={tagObject.color}
-            titleStyle={{'fontSize':30,'fontWeight':'lighter'}}
-          />
-          <CardText style={{'padding':2}} expandable={true}>
-            {tasksItems}
-          </CardText>
-          <CardActions >
-            <FlatButton label='delete' secondary={true} onTouchTap={()=>this.props.deleteTag(tagId)}/>
-          </CardActions >
-        </Card>
+        <div id={`tag${tagId}`}  key={tagId}>
+          <Card style={{'marginTop': 20}} initiallyExpanded={true}>
+            <CardHeader
+              title={tagObject.tagName}
+              actAsExpander={true}
+              showExpandableButton={true}
+              titleColor={tagObject.color}
+              titleStyle={{'fontSize':30,'fontWeight':'lighter'}}
+            />
+            <CardText style={{'padding':2}} expandable={true}>
+              {tasksItems}
+            </CardText>
+            <CardActions >
+              <FlatButton label='delete' secondary={true} onTouchTap={()=>this.props.deleteTag(tagId)}/>
+            </CardActions >
+          </Card>
+        </div>
         )
       }
     )

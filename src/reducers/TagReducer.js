@@ -17,12 +17,12 @@ const initialState: any = {
   tags: {
     '0':{
       'tagName': 'work',
-      'color': '#D500F9',
+      'color': '#84ffff',
       'tasks': []   
     },
     '1':{
       'tagName': 'relax',
-      'color': '#FFEB3B',
+      'color': '#a5d6a7',
       'tasks': []   
     }
   },

@@ -3,7 +3,7 @@ import InputBar from '../components/InputBar';
 import { connect } from 'react-redux';
 import Delete from 'material-ui/svg-icons/action/delete';
 import DoneAll from 'material-ui/svg-icons/action/done-all';
-import Undo from 'material-ui/svg-icons/content/undo';
+import Edit from 'material-ui/svg-icons/image/edit';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import TaskItem from '../components/TaskItem';
 import Tag from 'material-ui/svg-icons/action/label';
@@ -103,7 +103,7 @@ class Inbox extends Component {
     ];
     
     this.buttonsInNormal = [
-       { Icon: <Undo/>, callback: ()=>console.log('ss')  }, 
+       { Icon: <Edit/>, callback:()=>this.toggleEditMode()}  , 
     ];
     if(!this.state.editMode){
       return (

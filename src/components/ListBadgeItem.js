@@ -25,7 +25,7 @@ export default (props) => {
   if (index !== 0 || badgeCount===0){
     if(tags){
       const tagsItem = Object.entries(tags).map( ([tagId, tagObject]) =>
-        <ListItem key={tagId} hoverColor={tagObject.color}  primaryText={tagObject.tagName}  containerElement={<Link to={'/Tag' }/>} /> 
+        <ListItem key={tagId} hoverColor={tagObject.color}  primaryText={tagObject.tagName}  containerElement={<Link to={`/Tag#tag${tagId}` }/>} /> 
       )
       return (
         <ListItem

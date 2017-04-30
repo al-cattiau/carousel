@@ -6,11 +6,11 @@ import * as tagActions from '../actions/TagActions';
 import PickColor from 'material-ui/svg-icons/action/invert-colors';
 import Dialog from 'material-ui/Dialog';
 import { CirclePicker } from 'react-color';
-import * as colorsObject from '../helperFunc/colors';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import computeResidueColors from '../helperFunc/computeResidueColors';
 
-const colors = Object.entries(colorsObject).map( ([colorName, colorText], index)=> colorText );
+
 
 
 class AddTag extends Component {
@@ -36,7 +36,7 @@ class AddTag extends Component {
           autoScrollBodyContent={true}
         >
           <div style={{marginTop:10}}> 
-            <CirclePicker onChange={(color)=>{this.setState({tagColor:color.hex, openDialog:false}) } }colors={colors} width={'100%'}/>
+            <CirclePicker onChange={(color)=>{this.setState({tagColor:color.hex, openDialog:false}) } }colors={this.props.colorsTextArray} width={'100%'}/>
           </div>
         </Dialog>
       </Card>
@@ -51,5 +51,15 @@ class AddTag extends Component {
   }
 }
 
-const AddTagContainer = connect(null, tagActions)(AddTag);
+
+
+const mapStateToProps =(state)=>{
+  const colorsTextArray = computeResidueColors(state);
+  return ({
+    colorsTextArray
+  }
+  )
+}
+
+const AddTagContainer = connect(mapStateToProps, tagActions)(AddTag);
 export default AddTagContainer;
