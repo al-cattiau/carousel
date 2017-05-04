@@ -6,6 +6,7 @@ import FloatActionButton from '../components/FloatActionButton';
 import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
 import { taskInTrash } from '../helperFunc/computeTask';
 import Undo from 'material-ui/svg-icons/content/reply';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 
 class Trash extends Component {
@@ -29,8 +30,10 @@ class Trash extends Component {
 
   render(){
     return(
-      <div className='trashContainer'>
+      <div>
+        <CSSTransitionGroup transitionName='archivePaper' component='div' className='trashContainer'>
           {this.renderTaskPaper()}
+        </CSSTransitionGroup>
         <FloatActionButton  secondary={true} Icon={<DeleteForever/>} clickFab={()=>this.clearAll()}/>
       </div>
     )

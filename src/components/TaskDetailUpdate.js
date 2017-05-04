@@ -146,7 +146,7 @@ export default class detailUpdate  extends Component {
 
   render(){
     return (
-      <Paper zDepth={3} >
+      <Paper zDepth={3} style={{marginBottom: 5}}>
         <div className='detailContainer'>
           {this.updateTaskName()}
           {this.updateDueDate()}

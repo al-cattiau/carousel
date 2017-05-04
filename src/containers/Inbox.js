@@ -93,12 +93,18 @@ class Inbox extends Component {
     }
   }
 
+  returnNormalMode(){
+    this.setState({editMode:false});
+    this.props.clearSelectedTask();
+
+  }
+
   updateButton(){
     this.buttonsInEditMode = [
-      { Icon: <Cancel/>, callback: ()=>{this.setState({editMode:false});this.props.clearSelectedTask(); } , backgroundColor: "#F50057"  }, 
-      { Icon: <Delete />, callback:  ()=>{this.props.toggleActives(this.props.selectedTaskId);this.props.clearSelectedTask(); }, secondary:true },
-      { Icon: <DoneAll />, callback: ()=>{this.props.completeTasks(this.props.selectedTaskId); this.props.clearSelectedTask(); }},
-      { Icon: <Priority />, callback: ()=> this.props.priorityTasks(this.props.selectedTaskId) , backgroundColor: '#B71C1C'},
+      { Icon: <Cancel/>, callback: ()=>{this.returnNormalMode()} , backgroundColor: "#F50057"  }, 
+      { Icon: <Delete />, callback:  ()=>{this.props.toggleActives(this.props.selectedTaskId);this.returnNormalMode() }, secondary:true },
+      { Icon: <DoneAll />, callback: ()=>{this.props.completeTasks(this.props.selectedTaskId); this.returnNormalMode() }},
+      { Icon: <Priority />, callback: ()=> {this.props.priorityTasks(this.props.selectedTaskId);this.returnNormalMode() }, backgroundColor: '#B71C1C'},
        
     ];
     
@@ -111,7 +117,7 @@ class Inbox extends Component {
       )
     }else{
       this.tagsButton = Object.entries(this.props.tags).map(
-       ([tagId, tag]) => ({ Icon: <Tag/>, callback: ()=>this.props.associateTasksWithTag(tagId, this.props.selectedTaskId) , backgroundColor: tag.color })
+       ([tagId, tag]) => ({ Icon: <Tag/>, callback: ()=>{this.props.associateTasksWithTag(tagId, this.props.selectedTaskId);this.returnNormalMode() }, backgroundColor: tag.color })
       );
       return (
         <FloatActionButtonList buttons={[...this.buttonsInEditMode, ...this.tagsButton]}/>

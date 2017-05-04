@@ -10,7 +10,6 @@ import Add from 'material-ui/svg-icons/content/add';
 import { browserHistory } from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 
-
 const actions = Object.assign({}, tagActions, taskActions);
 
 class Tags extends Component {

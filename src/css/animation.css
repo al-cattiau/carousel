@@ -9,7 +9,6 @@
     transition:  .3s ease-in all;
 }
 
-
 .fade-leave {
     position: relative;
     left: 0px;
@@ -26,7 +25,9 @@
 }
 
 .FAB {
-    animation: shot .1s ease-in-out
+    animation: shot .1s ease-in-out;
+
+
 }
 @keyframes shot {
   0%{
@@ -37,3 +38,34 @@
 
 }
 
+
+.archivePaper-leave {
+  opacity: 1;
+  left: 0px;
+}
+
+.archivePaper-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+  left: -30px;
+}
+
+
+.tagPaper-enter {
+    background-color: #E0E0E0;
+
+}
+
+.tagPaper-enter-active {
+    background-color: white;
+}
+
+.tagPaper-leave {
+    background-color: #E0E0E0;
+    
+}
+
+.tagPaper-leave-active {
+    background-color: white;
+    
+}
