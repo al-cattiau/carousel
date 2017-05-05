@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import Signin from './Signin.js';
-import Signup from './Signup.js';
+import Signin from '../containers/Signin.js';
+import Signup from '../containers/Signup.js';
 
 const highlightTabStyle= {
   backgroundColor: 'white',

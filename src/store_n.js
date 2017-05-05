@@ -5,7 +5,8 @@ import TaskReducer from './reducers/TaskReducer';
 import TagReducer from './reducers/TagReducer';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-
+import SignReducer from './reducers/SignReducer';
+import { reducer as formReducer } from 'redux-form';
 
 // We need to wrap the base reducer, as this is the place where the loaded
 // state will be injected.
@@ -14,7 +15,7 @@ import { routerReducer } from 'react-router-redux';
 //       action and merge in the provided state :)
 // Note: A custom merger function can be passed as second argument
 const reducer = storage.reducer(
-    combineReducers({TagReducer, TaskReducer, routing: routerReducer}),
+    combineReducers({TagReducer, TaskReducer, SignReducer, routing: routerReducer, formReducer}),
     );
 
 // Now it's time to decide which storage engine should be used
@@ -23,7 +24,7 @@ const reducer = storage.reducer(
 // import createEngine from 'redux-storage-engine-localstorage';
 // const engine = createEngine('my-save-key');
 import createEngine from 'redux-storage-engine-remoteendpoint';
-const engine = createEngine('http://localhost:3090/load', 'http://localhost:3090/save');
+const engine = createEngine('http://localhost:3090/', 'http://localhost:3090/');
 
 // And with the engine we can create our middleware function. The middleware
 // is responsible for calling `engine.save` with the current state afer
@@ -34,7 +35,7 @@ const engine = createEngine('http://localhost:3090/load', 'http://localhost:3090
 const middleware = storage.createMiddleware(engine);
 
 // As everything is prepared, we can go ahead and combine all parts as usual
-const createStoreWithMiddleware = applyMiddleware(middleware, thunk)(createStore);
+const createStoreWithMiddleware = applyMiddleware( middleware, thunk, )(createStore);
 const store = createStoreWithMiddleware(reducer);
 
 // At this stage the whole system is in place and every action will trigger

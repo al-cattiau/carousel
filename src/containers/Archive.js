@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { taskInArchive, taskNameAutoComplete, taskToFilter, taskToSearch  } from '../helperFunc/computeTask';
 import Undo from 'material-ui/svg-icons/content/reply';
 import AutoComplete from 'material-ui/AutoComplete';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 
 class Archive extends Component{
@@ -53,9 +52,7 @@ class Archive extends Component{
     return (
       <div>
         {this.renderTaskFilter()}
-        <CSSTransitionGroup transitionName='archivePaper' component='div' className='archiveContainer'>
-          {this.renderTaskPaper()}
-        </CSSTransitionGroup>
+        {this.renderTaskPaper()}
       </div>
     )
   }
