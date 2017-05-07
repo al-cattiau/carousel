@@ -1,7 +1,7 @@
 import axios from 'axios';
-
-const ROOT_URL = 'http://162.243.152.84:3090';
-
+import store from './store';
+const ROOT_URL = 'http://localhost:3090';
+import { syncFail, syncSuccess } from './actions/SignActions';
 const storage = {
   
   getAllKeys : (cb)=> (new Promise((resolve, reject)=>{
@@ -37,10 +37,12 @@ const storage = {
         .then((res)=>{
           cb && cb(null, res.data)
           resolve(res.data);
+          store.dispatch(syncSuccess());
         })
         .catch((res)=>{
           // cb(res , {});
           reject('can not set to server');
+          store.dispatch(syncFail());
         })
     }    
   })),
@@ -69,9 +71,11 @@ const storage = {
         .then((res)=>{
           cb && cb(null, res.data)
           resolve(res.data);
+          store.dispatch(syncSuccess());
         })
         .catch((res)=>{
           reject('can not get ');
+          store.dispatch(syncFail());
           // cb(res , {});
         })
     }    
