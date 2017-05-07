@@ -10,7 +10,7 @@ import { autoRehydrate } from 'redux-persist';
 
 const enhancer = compose(
   /* [middlewares] */applyMiddleware(thunk),
-  autoRehydrate(/*paths, config*/),
+  autoRehydrate(),
 );
 
 const store = createStore(

@@ -10,6 +10,7 @@ import {
 import axios from 'axios';
 const ROOT_URL = 'http://localhost:3090';
 import * as signActions from '../actions/SignActions';
+import persistor from '../persistor';
 
 const inputStyle = {
   margin: '0px 20px',
@@ -49,6 +50,7 @@ class Signup extends Component{
       .then((res)=>{
         localStorage.setItem('token', res.data.token); 
         this.props.signInAndCloseDialog();
+        persistor.resume();
 
       })
       .catch((err)=>{

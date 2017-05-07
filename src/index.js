@@ -6,13 +6,18 @@ import routes from './routes';
 import store from './store';
 import { useScroll } from 'react-router-scroll';
 import { Provider } from 'react-redux';
-import { persistStore } from 'redux-persist';
+import persistor from './persistor';
+
 const history = syncHistoryWithStore(browserHistory, store)
+const token = localStorage.getItem('token');
+import { signIn } from './actions/SignActions';
+// persistor.pause();
+if(token && token!=='out'){
+  store.dispatch(signIn());
+  // persistor.resume();
 
+}
 
-const persistor =  persistStore(store, {
-  blacklist: ['SignReducer','routing','form']
-});
 
 ReactDOM.render(
   <Provider store={store} persistor={persistor}>

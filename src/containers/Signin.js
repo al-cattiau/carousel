@@ -10,6 +10,8 @@ import {
 import axios from 'axios';
 const ROOT_URL = 'http://localhost:3090';
 import * as signActions from '../actions/SignActions';
+import persistor from '../persistor';
+
 
 
 const inputStyle = {
@@ -35,7 +37,8 @@ class Signin extends Component{
       .then((res)=>{
         localStorage.setItem('token', res.data.token); 
         this.props.signInAndCloseDialog();
-
+        this.rehydrate();
+        persistor.resume();
       })
       .catch((err)=>{
         if(err.response.status === 401){
@@ -53,6 +56,18 @@ class Signin extends Component{
         <RaisedButton disabled={invalid} label='Submit' primary={true} fullWidth={true} containerElement={<button action='submit'/>}/>
       </form>
     )
+  }
+
+  rehydrate(){
+    axios.get(`${ROOT_URL}/`, {
+        headers: {
+          authorization: localStorage.getItem('token')
+        },
+        transformResponse: []
+      })
+        .then((res)=>{
+          persistor.rehydrate(res.data);
+        })
   }
 
 }

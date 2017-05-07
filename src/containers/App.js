@@ -90,7 +90,7 @@ class App extends Component{
       <FlatButton
         label="Yes"
         primary={true}
-        onTouchTap={()=>this.props.signOutAndCloseDialog()}
+        onTouchTap={()=>{this.props.signOutAndCloseDialog();localStorage.setItem('token','out')}}
       />,
     ];
     if(this.props.isSignIn){

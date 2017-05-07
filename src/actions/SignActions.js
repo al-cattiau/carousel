@@ -31,8 +31,8 @@ export const signOut = ()=>({
 });
 
 export const signInAndCloseDialog = ()=>(dispatch)=>{
-  dispatch(signIn());
   dispatch(closeSignDialog());
+  dispatch(signIn());
 }
 
 export const signOutAndCloseDialog = ()=>(dispatch)=>{
