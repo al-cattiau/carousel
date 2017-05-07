@@ -11,7 +11,7 @@ import '../css/layout.css';
 import '../css/animation.css';
 import Sync from 'material-ui/svg-icons/notification/sync';
 import SyncDisabled from 'material-ui/svg-icons/notification/sync-disabled';
-import SyncProblem from 'material-ui/svg-icons/notification/sync-problem';
+// import SyncProblem from 'material-ui/svg-icons/notification/sync-problem';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import DialogSign from '../components/DialogSign';
@@ -127,7 +127,7 @@ class App extends Component{
     if(!this.props.isSignIn){
       return <FlatButton icon={<SyncDisabled/>}/>
     }else if(!this.props.syncSuccessful){
-      return <FlatButton icon={<SyncProblem/>}/>
+      return <FlatButton icon={<Sync/>}/>
     }else{
       return <FlatButton icon={<Sync/>}/>
     }
