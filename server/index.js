@@ -8,6 +8,8 @@ const app = express();
 const router = require('./router.js');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
+app.use(express.static(path.resolve(__dirname,'../build')));
 
 // DB Setup
 mongoose.connect('mongodb://localhost/auth');

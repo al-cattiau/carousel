@@ -6,7 +6,7 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 
 module.exports = function (app) { 
-  app.use(express.static(path.resolve(__dirname,'..' 'build')));
+  
   app.get('/TagReducer', requireAuth, (req, res)=>{
     res.send(req.user.TagReducer);
   });
@@ -48,7 +48,7 @@ module.exports = function (app) {
   app.post('/signin', requireSignin, Authetication.signin);
   app.post('/signup', Authetication.signup);
   app.get('*', (req, res)=>{
-    res.sendFile(path.resolve(__dirname, '..', 'build','index.html'));
+    res.sendFile(path.resolve(__dirname, '../build','index.html'));
   })
   
 
