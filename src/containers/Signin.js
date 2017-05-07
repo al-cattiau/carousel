@@ -59,7 +59,7 @@ class Signin extends Component{
   }
 
   rehydrate(){
-    axios.get(`${ROOT_URL}/`, {
+    axios.get(`${ROOT_URL}/All`, {
         headers: {
           authorization: localStorage.getItem('token')
         },

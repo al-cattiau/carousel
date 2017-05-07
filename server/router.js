@@ -1,7 +1,7 @@
 const Authetication = require('./controllers/authetication');
 const passportService = require('./services/passport');
 const passport = require('passport');
-
+const path = require('path');
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 
@@ -35,7 +35,7 @@ module.exports = function (app) {
   app.get('/TaskReducer', requireAuth, (req, res)=>{
     res.send(req.user.TaskReducer);
   });
-  app.get('/', requireAuth, (req, res)=>{
+  app.get('/All', requireAuth, (req, res)=>{
     const rehydrate = {
       'TagReducer': req.user.TagReducer,
       'TaskReducer': req.user.TaskReducer,
