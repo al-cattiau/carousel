@@ -1,6 +1,6 @@
 import axios from 'axios';
 import store from './store';
-const ROOT_URL = 'http://localhost:3090';
+const ROOT_URL = 'http://162.243.152.84:3090';
 import { syncFail, syncSuccess } from './actions/SignActions';
 const storage = {
   
