@@ -8,7 +8,7 @@ import {
   TextField,
 } from 'redux-form-material-ui';
 import axios from 'axios';
-const ROOT_URL = 'http://162.243.152.84:3090';
+const ROOT_URL = 'http://162.243.152.84';
 import * as signActions from '../actions/SignActions';
 import persistor from '../persistor';
 
