@@ -9,6 +9,7 @@ import {
   ASSOCIATE_TASK_WITH_TAG,
   DE_ASSOCIATE_TASK_WITH_TAG,
   DELETE_TASK_IN_TAG,
+  DE_ASSOCIATE_TASK_IN_ALL_TAG
   } from '../actions/TagActions';
 
 
@@ -116,6 +117,23 @@ const TagReducer = (state: any=initialState, action: any) =>{
           }
         }
       });
+    }
+    case DE_ASSOCIATE_TASK_IN_ALL_TAG: {
+      const { taskId } = payload;
+      let tags = {};
+      Object.entries(state.tags).forEach(([tagId, tagObject])=>{
+        const filteredTasks = tagObject.tasks.filter((taskIdInTag)=> taskId!==taskIdInTag );
+        tags[tagId] = {
+          ...tagObject,
+          tasks: filteredTasks
+        }
+      }); 
+      return Object.assign({}, {
+        ...state,
+        tags
+
+      });
+
     }
 
 

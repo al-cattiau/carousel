@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import TrashTaskPaper from '../components/TaskPaper';
 import { connect } from 'react-redux';
-import { toggleActive, deleteTasks } from '../actions/TaskActions';
+import { toggleActive, deleteTasks,  } from '../actions/TaskActions';
+import { de_associateTasksInAllTag } from '../actions/TagActions';
 import FloatActionButton from '../components/FloatActionButton';
 import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
 import { taskInTrash } from '../helperFunc/computeTask';
@@ -24,7 +25,8 @@ class Trash extends Component {
 
   clearAll(){
     const allTaskId = Object.entries(this.props.tasks).map( ([taskId, taskObject])=>taskId);
-    this.props.deleteTasks(allTaskId);  
+    this.props.deleteTasks(allTaskId); 
+    this.props.de_associateTasksInAllTag(allTaskId);
   }
 
 
@@ -57,6 +59,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteTasks: (ids) =>{
       dispatch(deleteTasks(ids))
+    },
+    de_associateTasksInAllTag: (ids)=>{
+      dispatch(de_associateTasksInAllTag(ids))
     }
   }
 }
