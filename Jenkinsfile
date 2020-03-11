@@ -1,7 +1,18 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'alpine'
+    }
+
+  }
   stages {
-    stage('') {
+    stage('error') {
+      agent {
+        docker {
+          image 'alpine'
+        }
+
+      }
       steps {
         input(message: 'm', id: 'k', ok: 'k')
       }
