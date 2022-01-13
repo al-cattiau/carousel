@@ -1635,13 +1635,13 @@ debug@2.2.0, debug@~2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@2.6.1, debug@^2.1.1, debug@^2.2.0, debug@^2.4.5, debug@^2.6.0:
+debug@2.6.1:
   version "2.6.1"
   resolved "http://registry.npm.taobao.org/debug/download/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
     ms "0.7.2"
 
-debug@2.6.3, debug@^2.1.0:
+debug@2.6.3, debug@^2.1.0, debug@^2.1.1, debug@^2.2.0, debug@^2.6.0:
   version "2.6.3"
   resolved "http://registry.npm.taobao.org/debug/download/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
@@ -2377,10 +2377,8 @@ flow-bin@^0.43.0:
   resolved "http://registry.npm.taobao.org/flow-bin/download/flow-bin-0.43.0.tgz#5cd16696be4311c0b14f0932e89ba8661a39b1c1"
 
 follow-redirects@^1.2.3:
-  version "1.2.3"
-  resolved "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.2.3.tgz#01abaeca85e3609837d9fcda3167a7e42fdaca21"
-  dependencies:
-    debug "^2.4.5"
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
 
 for-in@^1.0.1:
   version "1.0.2"
