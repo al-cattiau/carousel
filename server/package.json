@@ -10,7 +10,7 @@
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
-    "express": "^4.15.2",
+    "express": "^4.17.3",
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.9.6",
     "morgan": "^1.8.1",
